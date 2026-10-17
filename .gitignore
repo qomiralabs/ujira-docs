@@ -24,3 +24,6 @@ CLAUDE.md
 
 # Node tooling (add the docs generator output folder once one is chosen)
 node_modules/
+
+# Python bytecode from running the scripts
+__pycache__/
