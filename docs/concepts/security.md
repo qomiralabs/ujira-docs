@@ -15,7 +15,7 @@ Here is who holds the money at each step:
 | During a payout | Moving from the mandate to the recipient's payout method, through a licensed payout service where money must become local cash or a bank deposit |
 | After a payout | With the recipient, in the account or wallet they chose |
 
-At no step does the money sit in an account that UJIRA controls. For a split payout, each leg goes straight to a destination the recipient controls.
+At no step does the money sit in an account that UJIRA controls. For a split payout, a local-currency leg goes through a licensed payout service to the recipient's bank, mobile money or cash pickup, and a "Keep in dollars" leg goes straight to the recipient's own wallet.
 
 ## Why it matters
 

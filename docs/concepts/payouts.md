@@ -31,6 +31,8 @@ The principal still pays one amount. The mandate's caps and approvals apply to t
 
 Each part of a payout is called a **leg**. A normal payout has one leg. A split payout has two.
 
+The details in this table are planned and not final.
+
 | Rule | What happens |
 | --- | --- |
 | Number of legs | At most two: one local-currency method plus "Keep in dollars" |
@@ -42,7 +44,7 @@ Each part of a payout is called a **leg**. A normal payout has one leg. A split 
 | Fees | Shown per leg on the receipt, never hidden |
 | Countries | "Keep in dollars" is offered only where local rules allow holding digital dollars |
 
-Each leg goes straight to a destination the recipient controls. UJIRA never holds any part of it.
+A local-currency leg goes through a licensed payout service to the recipient's chosen method, and a "Keep in dollars" leg goes straight to the recipient's own wallet. UJIRA never holds any part of either.
 
 ## Example
 

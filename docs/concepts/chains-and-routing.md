@@ -15,7 +15,7 @@ You never pick a chain. You send one payout request, and the router chooses.
 No single chain does everything a payout needs.
 
 - **Stellar** connects to licensed payout services that turn dollars into local money in a bank account or e-wallet, and to cash pickup in many countries.
-- **Celo** has local-currency stablecoins (digital tokens that track a local currency, such as the Kenyan shilling) and mobile wallets that many people in UJIRA's first countries already use.
+- **Celo** has local-currency stablecoins (digital tokens that track a local currency, such as the Kenyan shilling) and mobile wallets that many people already use in the countries it serves.
 
 Choosing one chain would mean giving up half of what makes a payout land. With both, UJIRA can reach more people, and can choose between the two where both serve a corridor.
 
