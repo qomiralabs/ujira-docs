@@ -1,6 +1,6 @@
 # Mandates
 
-> **Status:** UJIRA is in development. This page describes how mandates are designed to work. The mandate contracts are not live yet.
+> **Status:** UJIRA is in development. This page describes how mandates are designed to work. The mandate contracts are not live yet, and dashboard details are not final.
 
 ## What it is
 

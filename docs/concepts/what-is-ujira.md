@@ -13,7 +13,7 @@ There are two sides:
 
 A principal can pay through UJIRA in three ways:
 
-1. From the **dashboard**, a web app where a person sets rules, adds money and watches payouts.
+1. From the **dashboard**, a planned web app where a person sets rules, adds money and watches payouts. Its details are not final.
 2. From its own code, through the **API** (application programming interface).
 3. Through an **agent**: software that acts for the principal, such as an AI agent that reviews finished tasks and pays for them. The agent holds a key that lets it ask for payouts, but only inside the limits the principal set.
 
