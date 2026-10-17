@@ -39,9 +39,12 @@ npx --yes markdownlint-cli2@0.23.3
 
 # Fail if any file contains an em dash or an en dash
 ./scripts/check-dashes.sh
+
+# Self test for the dash check
+./scripts/test-check-dashes.sh
 ```
 
-Both commands exit with code 0 when the docs are clean.
+All three commands exit with code 0 when the docs are clean.
 
 ## License
 
