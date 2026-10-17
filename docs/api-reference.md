@@ -17,7 +17,7 @@ The API is how platforms and agents automate payouts: paying many people on a sc
 - **Amounts are never decimals that can round.** Every amount is a whole number in the currency's **minor units** (the smallest unit, such as cents for dollars or kobo for naira), always with an explicit currency. For example, $12.50 is 1250 minor units of US dollars.
 - **Every request that moves money carries an idempotency key**, so a retried request is never paid twice. See [Payouts and split payouts](concepts/payouts.md#idempotency).
 - **Payouts are made of one or more legs** from the start. A normal payout has one leg; a split payout has two.
-- **Webhooks and streaming status are planned after launch.** A **webhook** is a message UJIRA sends to your server when something changes, such as a payout being paid, so you do not have to keep asking.
+- **Webhooks and streaming status are planned.** A **webhook** is a message UJIRA sends to your server when something changes, such as a payout being paid, so you do not have to keep asking.
 - **The reference will be generated from the API's machine-readable description**, so the docs and the API cannot drift apart.
 
 ## Example

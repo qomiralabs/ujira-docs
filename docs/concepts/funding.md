@@ -1,12 +1,12 @@
 # Funding
 
-> **Status:** UJIRA is in development. This page describes how funding is designed to work at launch.
+> **Status:** UJIRA is in development. This page describes how funding is designed to work.
 
 ## What it is
 
 **Funding** is how a principal puts money into a mandate, so the mandate has something to pay out. (A **mandate** is the set of spending rules that also holds the money. See [Mandates](mandates.md).)
 
-At launch you fund a mandate with a **stablecoin deposit**. A stablecoin is a digital token designed to keep a steady value. UJIRA accepts these dollar stablecoins:
+You fund a mandate with a **stablecoin deposit**. A stablecoin is a digital token designed to keep a steady value. UJIRA accepts these dollar stablecoins:
 
 | Network | Accepted assets |
 | --- | --- |
@@ -60,6 +60,6 @@ The platform held no XLM and paid no network fee. The exchange paid the fee for 
 
 **I sent the wrong asset or used the wrong network.** Only the assets in the table above, on the network shown next to the funding address, are accepted. Always copy the funding address for the exact asset and network you are sending. What can be recovered after a wrong deposit is not documented yet.
 
-**Can I fund from a bank account?** Not at launch. Stablecoin deposits are the only way to fund a mandate at launch. New ways to fund will be announced in the [changelog](../../CHANGELOG.md).
+**Can I fund from a bank account?** No. Stablecoin deposits are the only planned way to fund a mandate. Any new way to fund will be announced in the [changelog](../../CHANGELOG.md).
 
 **My Stellar wallet says I do not have enough XLM.** Your own Stellar account needs the minimum balance described above before it can hold and send USDC. Withdrawing from an exchange avoids this.

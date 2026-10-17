@@ -20,9 +20,9 @@ The **embed widget** is the ready-made screen that runs these steps inside your 
 
 - **You skip the hardest part.** Identity checks and payout details differ by country. The widget handles them, so you do not build and maintain onboarding for each country.
 - **Recipients stay in your product.** The widget takes your brand: your colours and your look. It shows only a small "Payouts by UJIRA" line with the UJIRA mark in its footer.
-- **The right methods appear automatically.** Onboarding knows which payout methods work in which country, and which network each method uses. It records this so UJIRA can route each payout correctly later. Recipients never see network or stablecoin names; they see their own currency and plain choices such as "Keep in dollars".
+- **The right methods appear automatically.** Onboarding knows which payout methods work in which country, and which network each method uses. It records this so UJIRA can route each payout correctly. Recipients never see network or stablecoin names; they see their own currency and plain choices such as "Keep in dollars".
 
-At launch the widget is hosted by UJIRA and supports theming. Full white-label is planned for later.
+The widget is planned as a hosted widget that supports theming. Full white-label is also planned.
 
 ## Example
 

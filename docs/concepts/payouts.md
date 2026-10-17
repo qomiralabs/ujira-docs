@@ -1,6 +1,6 @@
 # Payouts and split payouts
 
-> **Status:** UJIRA is in development. This page describes how payouts are designed to work. Single and batch payouts are planned for launch. Split payouts are planned for shortly after launch.
+> **Status:** UJIRA is in development. This page describes how payouts are designed to work. Single payouts, batch payouts and split payouts are all planned.
 
 ## What it is
 

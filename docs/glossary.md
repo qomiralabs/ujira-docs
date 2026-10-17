@@ -72,7 +72,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Trustline.** A Stellar account setting that lets the account hold a specific asset, such as USDC.
 
-**Webhook.** A message UJIRA will send to your server when something changes, such as a payout being paid. Planned for after launch.
+**Webhook.** A message UJIRA will send to your server when something changes, such as a payout being paid. Planned.
 
 ## Example
 
