@@ -1,0 +1,17 @@
+// markdownlint-cli2 configuration for the UJIRA docs.
+// Run with: npx --yes markdownlint-cli2@0.23.3
+{
+  "config": {
+    "default": true,
+    // Prose is wrapped by the editor, not by hand.
+    "MD013": false,
+    // Repeated headings such as "Example" are fine across sections.
+    "MD024": { "siblings_only": true },
+    // Use dashes for lists and fenced code blocks everywhere.
+    "MD004": { "style": "dash" },
+    "MD046": { "style": "fenced" },
+    "MD048": { "style": "backtick" }
+  },
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules/**", "LICENSE"]
+}
