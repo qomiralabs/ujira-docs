@@ -29,7 +29,7 @@ At no step does the money sit in an account that UJIRA controls. For a split pay
 - **Approvals.** Payouts above the threshold wait for a named person, and every decision goes into an audit log.
 - **Pause and revoke.** The principal can stop a mandate at any time.
 - **No double payments.** Every request that moves money carries an idempotency key, so a retried request is never paid twice. See [Payouts and split payouts](payouts.md#idempotency).
-- **Separation between customers.** Each principal's records are planned to be isolated at the database level from other principals' records.
+- **Separation between customers.** Each principal's records are isolated at the database level from other principals' records.
 - **Audited before mainnet.** The mandate contracts will be independently audited before mainnet (**mainnet** is the live network, where real money moves).
 
 ## Example
