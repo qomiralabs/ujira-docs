@@ -19,7 +19,7 @@ Each mandate has a **funding address** on each network: the address you deposit 
 
 ## Why it matters
 
-A stablecoin deposit needs no bank partner, no extra contract and no deposit fee from UJIRA. Any company that already holds stablecoins, or can buy them through its own exchange account, can fund a mandate the same day.
+A stablecoin deposit needs no bank partner and no extra contract. Any company that already holds stablecoins, or can buy them through its own exchange account, can fund a mandate by depositing them to its funding address.
 
 The money goes straight into the mandate, which the principal controls. UJIRA never holds it. See [Security and the non-custodial model](security.md).
 

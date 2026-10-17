@@ -12,7 +12,7 @@ Onboarding happens once per recipient:
 2. **Verify identity.** The recipient verifies their identity once. This is often called **KYC** (know your customer): the identity checks that licensed payment services must run before paying someone.
 3. **Pick a method.** The recipient chooses how to be paid: a bank account, mobile money, cash pickup, or a supported mobile wallet. The methods offered depend on the recipient's country.
 
-Shortly after launch, recipients will also be able to add a second method and set a split, for example "Keep 30% in dollars, send the rest to M-Pesa". See [Payouts and split payouts](payouts.md#split-payouts).
+Split payouts are planned: recipients will be able to add a second method and set a split, for example "Keep 30% in dollars, send the rest to M-Pesa". See [Payouts and split payouts](payouts.md#split-payouts).
 
 The **embed widget** is the ready-made screen that runs these steps inside your own product. You add it to your site with a script tag, and it appears as a **web component**: a standard HTML element that works in any web framework, or in none. You do not build onboarding yourself.
 
