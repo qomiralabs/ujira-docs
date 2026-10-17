@@ -26,7 +26,7 @@ These docs explain how UJIRA works, in plain English, for developers who are new
 ### Reference
 
 - [API reference](docs/api-reference.md) (Planned)
-- [MCP guide](docs/mcp-guide.md) (Planned): using UJIRA from Claude and other MCP clients
+- [MCP guide](docs/mcp-guide.md) (Planned): using UJIRA from an MCP client such as a desktop AI assistant or IDE agent
 - [Changelog](CHANGELOG.md)
 
 ## Checking the docs locally

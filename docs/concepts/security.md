@@ -1,6 +1,6 @@
 # Security and the non-custodial model
 
-> **Status:** UJIRA is in development. This page describes the security model UJIRA is built around. The mandate contracts are not live yet.
+> **Planned.** UJIRA is in development. This page describes the security model UJIRA is being built around. The mandate contracts are not live yet.
 
 ## What it is
 
@@ -29,8 +29,8 @@ At no step does the money sit in an account that UJIRA controls. For a split pay
 - **Approvals.** Payouts above the threshold wait for a named person, and every decision goes into an audit log.
 - **Pause and revoke.** The principal can stop a mandate at any time.
 - **No double payments.** Every request that moves money carries an idempotency key, so a retried request is never paid twice. See [Payouts and split payouts](payouts.md#idempotency).
-- **Separation between customers.** Every record belongs to exactly one principal, and one principal can never read or pay from another principal's data or mandates.
-- **Audited before mainnet.** The mandate contracts will not run with real money (on **mainnet**, the live network) until they have passed an independent external security audit.
+- **Separation between customers.** Each principal's records are isolated at the database level from other principals' records.
+- **Audited before mainnet.** The mandate contracts will be independently audited before mainnet (**mainnet** is the live network, where real money moves).
 
 ## Example
 

@@ -4,7 +4,7 @@
 
 ## What it is
 
-**MCP** (Model Context Protocol) is an open standard that lets an AI application connect to outside tools and data. An application that speaks MCP is called an **MCP client**. Claude is one MCP client; there are many others.
+**MCP** (Model Context Protocol) is an open standard that lets an AI application connect to outside tools and data. An application that speaks MCP is called an **MCP client**. An MCP client might be a desktop AI assistant or an IDE agent; there are many others.
 
 UJIRA will ship an **MCP server**: a small service that lets any MCP client work with UJIRA. Through it, an agent or a person chatting with an MCP client will be able to request payouts, check their status and read receipts.
 
@@ -20,7 +20,7 @@ An agent that already uses MCP can pay people through UJIRA without custom integ
 
 ## Example
 
-There is no example yet. This guide will include a tested setup for Claude and for other MCP clients when the server is released.
+There is no example yet. This guide will include a tested setup for common MCP clients, such as a desktop AI assistant or an IDE agent, when the server is released.
 
 ## Troubleshooting
 
