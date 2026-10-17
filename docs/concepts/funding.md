@@ -30,7 +30,7 @@ The money goes straight into the mandate, which the principal controls. UJIRA ne
 
 ## Network fees
 
-Every blockchain charges a small **network fee** (often called **gas**) to process a transaction. Normally you pay it in the network's own token: XLM on Stellar, CELO on Celo. With UJIRA, you never need XLM or CELO to pay network fees, and you never need CELO at all.
+Every blockchain charges a small **network fee** (often called **gas**) to process a transaction. Normally you pay it in the network's own token: XLM on Stellar, CELO on Celo. With UJIRA, a principal never needs XLM or CELO.
 
 | Network | Who pays the network fee |
 | --- | --- |
@@ -39,7 +39,10 @@ Every blockchain charges a small **network fee** (often called **gas**) to proce
 
 ### The Stellar minimum balance
 
-Fees are not the only Stellar rule. Every Stellar account must keep a **minimum balance** of XLM: about 1.5 XLM for an account that holds USDC, made up of a 1 XLM base reserve plus 0.5 XLM for the USDC **trustline** (the setting that lets a Stellar account hold USDC). This is a network rule, not a UJIRA fee, and the XLM stays in your account. Because Stellar deposits come from your own Stellar account, that account needs this minimum balance.
+Fees are not the only Stellar rule. Every Stellar account must keep a **minimum balance** of XLM, called **reserves**: a 1 XLM base reserve plus 0.5 XLM for the USDC **trustline** (the setting that lets a Stellar account hold USDC). You still never need XLM:
+
+- **If you already have a Stellar account that holds USDC,** it already meets this minimum.
+- **If you do not,** UJIRA sets up a Stellar funding account that you own and control, and sponsors its minimum balance and trustline reserves using Stellar's **sponsored reserves** feature, where another account covers an account's reserves. UJIRA covers the reserves only; it never holds your funds.
 
 ## Balances
 
@@ -55,11 +58,12 @@ A deposit counts as available once the network confirms it.
 
 A grant platform wants to fund a mandate on Stellar with $50,000.00 that it holds on an exchange.
 
-1. In its exchange account, it withdraws 50,000 USDC on the Stellar network to its own Stellar account. That account already holds the minimum balance and a USDC trustline.
-2. Through UJIRA, it signs a deposit of 50,000 USDC from its own Stellar account into the mandate. UJIRA sponsors the network fee for this transaction.
-3. Once the Stellar network confirms the deposit, the mandate's balance shows $50,000.00 and payouts can start.
+1. The platform has no Stellar account yet, so UJIRA sets up a Stellar funding account that the platform owns and controls, and sponsors its reserves.
+2. In its exchange account, the platform withdraws 50,000 USDC on the Stellar network to that funding account.
+3. Through UJIRA, it signs a deposit of 50,000 USDC from its funding account into the mandate. UJIRA sponsors the network fee for this transaction.
+4. Once the Stellar network confirms the deposit, the mandate's balance shows $50,000.00 and payouts can start.
 
-The platform paid no network fee for the deposit into the mandate. The only XLM involved is the minimum balance that stays in its own account.
+The platform never held any XLM. UJIRA sponsored the reserves of its funding account and the network fee for the deposit, and never held the platform's funds.
 
 ## Troubleshooting
 
@@ -71,4 +75,4 @@ The platform paid no network fee for the deposit into the mandate. The only XLM 
 
 **Can I fund from a bank account?** No. Stablecoin deposits are the only planned way to fund a mandate. Any new way to fund will be announced in the [changelog](../../CHANGELOG.md).
 
-**My Stellar wallet says I do not have enough XLM.** Your own Stellar account needs the minimum balance described above before it can hold USDC. Add enough XLM to cover it. UJIRA still sponsors the network fee on transactions you sign through UJIRA.
+**My Stellar wallet says I do not have enough XLM.** You should not need any. If your Stellar account does not hold USDC yet, use the Stellar funding account UJIRA sets up for you, whose reserves UJIRA sponsors. UJIRA also sponsors the network fee on transactions you sign through UJIRA.

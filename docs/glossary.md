@@ -30,7 +30,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Embed widget.** The ready-made onboarding screen you add to your own product. See [Recipient onboarding](concepts/recipient-onboarding.md).
 
-**Fee-bump transaction.** A Stellar feature that lets a second account pay the network fee for your transaction. UJIRA uses it to sponsor Stellar fees, so you never need XLM to pay them.
+**Fee-bump transaction.** A Stellar feature that lets a second account pay the network fee for your transaction. UJIRA uses it to sponsor Stellar fees.
 
 **Fee currency.** A Celo feature that lets a transaction pay its network fee in a stablecoin, such as USDC or USDm, instead of CELO.
 
@@ -50,7 +50,9 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **MCP (Model Context Protocol).** An open standard that lets AI applications connect to outside tools. See [MCP guide](mcp-guide.md).
 
-**Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep: a base reserve, plus a little more for each asset it holds. It stays in the account; it is not a fee.
+**Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep: a base reserve, plus a little more for each asset it holds. It is not a fee. UJIRA sponsors these reserves for the Stellar funding account it sets up for a principal, so principals never need XLM.
+
+**Sponsored reserves.** A Stellar feature that lets one account cover another account's minimum balance. The sponsored account still belongs to its owner.
 
 **Minor units.** The smallest unit of a currency, such as cents for US dollars or kobo for naira. UJIRA counts money in whole minor units so amounts never round.
 
