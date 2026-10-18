@@ -26,7 +26,7 @@ You integrate once and pay people in many countries without building a payout sy
 
 - **The principal pays UJIRA's fee.** It covers the network costs of every payout.
 - **Activation is free for recipients.** UJIRA covers the cost of activating a new Stellar account. If a recipient's existing Stellar wallet has no USDC trustline yet, UJIRA also covers the 0.5 XLM USDC trustline reserve. The recipient pays nothing for either.
-- **The recipient receives the full dollar amount.** Every dollar the principal pays reaches the recipient: as USDC in their own Stellar wallet, or as the dollar amount UJIRA sends to the anchor. "USDC to your Stellar wallet" costs the recipient nothing.
+- **The recipient receives the full dollar amount.** Every dollar of the payout amount reaches the recipient: as USDC in their own Stellar wallet, or as the dollar amount UJIRA sends to the anchor. "USDC to your Stellar wallet" costs the recipient nothing.
 - **Cash-out costs apply only when converting.** If the recipient chooses bank, mobile money or cash, the anchor's fee and exchange rate apply only to converting those dollars into local currency. Both are shown to the recipient before they choose the method.
 - **A principal can cover cash-out costs,** so the recipient receives the full local amount.
 
