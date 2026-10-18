@@ -14,10 +14,10 @@ A receipt for the principal carries:
 | Amount and currency | How much was paid, in which currency |
 | Recipient reference | Which recipient was paid |
 | Mandate | Which mandate the money came from |
-| Settling network | The blockchain the payout settled on: Stellar or Celo |
-| Transaction hash | The unique ID of the payment on that network |
+| Network | Stellar, the blockchain every payout settles on |
+| Transaction hash | The unique ID of the payment on Stellar |
 
-A **transaction hash** is like a tracking number that the network itself issues. Anyone can look it up on a public **block explorer** (a website that shows every transaction on a network) and see that the payment happened, when, and for how much. You do not have to take UJIRA's word for it.
+A **transaction hash** is like a tracking number that the network itself issues. Anyone can look it up on a public **block explorer** (a website that shows every transaction on a network) and see that the payment happened, when, and for how much. You do not have to take UJIRA's word for it. For a local-currency payout, the hash records the payment on Stellar to the licensed anchor that paid the recipient.
 
 A split payout (see [Payouts and split payouts](payouts.md)) still has **one** receipt. It shows the total, then each leg with its method, amount, currency, fee and transaction hash.
 
@@ -37,12 +37,12 @@ The expert in Lagos from the [split payout example](payouts.md#example) gets one
 
 > ₦480,000.00 paid: ₦336,000.00 to bank, $96.00 kept in dollars
 
-The research marketplace's copy of the same receipt also shows the task ID, the mandate, the fee on each leg, the settling network, and a transaction hash for each leg.
+The research marketplace's copy of the same receipt also shows the task ID, the mandate, the fee on each leg, and a Stellar transaction hash for each leg.
 
 ## Troubleshooting
 
-**I cannot find a transaction on the explorer.** Make sure you are using an explorer for the network shown on the receipt. A Stellar transaction hash will not appear on a Celo explorer, and the other way round.
+**I cannot find a transaction on the explorer.** Make sure you are using a Stellar explorer for the live network, not a test network, and that you copied the whole hash.
 
 **A split payout shows two transaction hashes.** That is expected. Each leg is its own payment on the network, so each has its own hash.
 
-**A recipient asks why their receipt does not mention Stellar or Celo.** Recipient receipts leave out network details on purpose, because recipients only need to know they were paid, how much, and when.
+**A recipient asks why their receipt does not mention Stellar.** Recipient receipts leave out network details on purpose, because recipients only need to know they were paid, how much, and when.

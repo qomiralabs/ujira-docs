@@ -1,46 +1,47 @@
-# Chains and routing
+# Stellar and payout methods
 
-> **Status:** UJIRA is in development. This page gives a high-level view of how routing is designed to work.
+> **Status:** UJIRA is in development. This page gives a high-level view of how payouts reach people.
 
 ## What it is
 
-UJIRA settles payouts on two **blockchains**, public networks that record every payment so anyone can check it: **Stellar** and **Celo**. People often call a blockchain a **chain**. Both are core to UJIRA, and neither is a backup for the other.
+UJIRA settles every payout on **Stellar**, a public **blockchain**: a network that records every payment so anyone can check it. People often call a blockchain a **chain**.
 
-The **router** is the part of UJIRA that picks which chain a payout uses. It decides per **corridor**: the route money takes to reach a recipient in a given country, with a given payout method.
+From Stellar, a payout reaches the recipient in one of two ways:
 
-You never pick a chain. You send one payout request, and the router chooses.
+| Payout method | How it works |
+| --- | --- |
+| Dollars to the recipient's own Stellar wallet | UJIRA pays USDC, a dollar stablecoin, straight to a Stellar wallet the recipient controls. Recipients see this as "Keep in dollars". |
+| Local currency to bank, mobile money or cash | UJIRA pays USDC to a licensed **anchor**, which pays the recipient in their local currency: into a bank account, to mobile money, or as cash. |
+
+An **anchor** is a licensed business that connects the Stellar network to local money. It receives a digital dollar on Stellar and pays out the local currency on the other side, under the rules of the country it is licensed in. Anchors also run the identity checks the law requires before they pay someone.
 
 ## Why it matters
 
-No single chain does everything a payout needs.
+You integrate once and do not build a connection to each country's banks or mobile money services. Stellar was built for payments: transactions settle in seconds for a fraction of a cent, and anchors give it a standard way to reach local money.
 
-- **Stellar** connects to licensed payout services that turn dollars into local money in a bank account or e-wallet, and to cash pickup in many countries.
-- **Celo** has local-currency stablecoins (digital tokens that track a local currency, such as the Kenyan shilling) and mobile wallets that many people already use in the countries it serves.
+You never deal with Stellar directly to pay someone. You send one payout request, and UJIRA delivers it by the method the recipient chose.
 
-Choosing one chain would mean giving up half of what makes a payout land. With both, UJIRA can reach more people, and can choose between the two where both serve a corridor.
+## How UJIRA chooses the path
 
-## How the router decides
+The recipient picks the method during [onboarding](recipient-onboarding.md). UJIRA then picks the path for that method, from its **routing configuration**: a list, kept by UJIRA, of which anchors serve which countries and methods.
 
-UJIRA picks the chain per corridor, from its **routing configuration**: a list, kept by UJIRA, of which chains serve which corridors.
+A **corridor** is the route money takes to reach a recipient in a given country, with a given payout method. Coverage grows as anchors add countries and methods, and UJIRA updates its routing configuration without needing a new release. Your integration does not change when coverage grows.
 
-- **If only one chain serves the corridor,** the router uses that chain.
-- **If both chains serve the corridor,** the router uses the cheaper and faster path at that moment. If one chain is **degraded** (slow or having problems), it falls back to the other.
-
-Coverage changes as new countries and methods open on each chain, so UJIRA updates its routing configuration without needing a new release. Your integration does not change when coverage grows.
+Which countries and methods are available is not published yet. Countries and methods named in these docs are examples only, not a statement of coverage.
 
 ## Example
 
-A platform pays two people on the same day:
+A platform pays two people on the same day, with two payout requests sent in exactly the same way:
 
-- A recipient who chose cash pickup. Only Stellar serves cash pickup, so the router pays through Stellar.
-- A recipient whose corridor both chains serve. The router compares the two paths at that moment and uses the cheaper and faster one. If that chain is degraded, it uses the other.
+- A recipient who chose "Keep in dollars" receives USDC straight in their own Stellar wallet.
+- A recipient who chose mobile money receives local currency from a licensed anchor that serves their country.
 
-The platform sent two payout requests in exactly the same way. Each receipt shows the chain that settled it, so the platform can verify each payment on the right network.
+Both payouts settle on Stellar, and each receipt carries the Stellar transaction hash, so the platform can check each payment on the network.
 
 ## Troubleshooting
 
-**Can I force a payout onto one chain?** No. Routing is UJIRA's job, so your integration stays the same as coverage changes.
+**Can I choose the anchor for a payout?** No. Choosing the path is UJIRA's job, so your integration stays the same as coverage changes.
 
 **Which countries are covered?** The list of supported countries and methods is not published yet. It will be added to these docs.
 
-**Do recipients see which chain was used?** No. Recipient screens and receipts never mention chains. Only principals see the settling chain, on their receipts.
+**Do recipients see Stellar or USDC?** No. Recipient screens and receipts never mention the network or USDC. They see their own currency, or "Keep in dollars". Only principals see the network details, on their receipts.

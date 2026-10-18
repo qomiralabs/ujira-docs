@@ -6,21 +6,11 @@
 
 **Funding** is how a principal puts money into a mandate, so the mandate has something to pay out. (A **mandate** is the set of spending rules that also holds the money. See [Mandates](mandates.md).)
 
-You fund a mandate with a **stablecoin deposit**. A stablecoin is a digital token designed to keep a steady value. UJIRA accepts these dollar stablecoins:
+You fund a mandate with a **stablecoin deposit**: **USDC on Stellar**. A stablecoin is a digital token designed to keep a steady value. **USDC** is a dollar stablecoin issued by Circle. **Stellar** is the **blockchain** (a public network that records every payment) that UJIRA runs on. See [Stellar and payout methods](chains-and-routing.md).
 
-| Network | Accepted assets |
-| --- | --- |
-| Stellar | USDC |
-| Celo | USDC or USDm |
+Each mandate has a **funding address**: the mandate's own address on Stellar, which deposits go into. You deposit from your own Stellar account into the mandate, through UJIRA. Exchanges cannot pay a mandate's address on Stellar directly, so money withdrawn from an exchange goes to your own Stellar account first, then into the mandate.
 
-**USDC** is a dollar stablecoin issued by Circle. **USDm** is a dollar stablecoin native to Celo. Stellar and Celo are the two **blockchains** (public networks that record every payment) that UJIRA runs on. See [Chains and routing](chains-and-routing.md).
-
-Each mandate has a **funding address** on each network: the mandate's own address, which deposits go into. How you deposit depends on the network:
-
-- **On Stellar,** you deposit from your own Stellar account into the mandate, through UJIRA. Exchanges cannot pay a mandate's address on Stellar directly, so money withdrawn from an exchange goes to your own Stellar account first, then into the mandate.
-- **On Celo,** you deposit USDC or USDm to the mandate's funding address from your wallet.
-
-The dashboard is planned to show each funding address with the exact asset and network (for example "USDC on Stellar"), and a warning not to send any other asset or use any other network.
+The dashboard is planned to show the funding address with the exact asset and network ("USDC on Stellar"), and a warning not to send any other asset or use any other network.
 
 ## Why it matters
 
@@ -30,12 +20,9 @@ The money goes straight into the mandate, which the principal controls. UJIRA ne
 
 ## Network fees
 
-Every blockchain charges a small **network fee** (often called **gas**) to process a transaction. Normally you pay it in the network's own token: XLM on Stellar, CELO on Celo. With UJIRA, a principal never needs XLM or CELO.
+Every blockchain charges a small **network fee** (often called **gas**) to process a transaction. On Stellar you would normally pay it in XLM, Stellar's own token. With UJIRA, a principal never needs XLM.
 
-| Network | Who pays the network fee |
-| --- | --- |
-| Stellar | UJIRA sponsors the fee on every transaction you sign through UJIRA: funding, pausing, revoking and approving. It uses a Stellar feature called a **fee-bump transaction**, where a second account pays the fee for yours. |
-| Celo | The fee is paid in USDC or USDm, using Celo's **fee currency** feature, which lets a transaction pay its fee in a stablecoin instead of CELO. Every transaction UJIRA prepares for you pays its fee in the asset you are sending. |
+UJIRA sponsors the fee on every transaction you sign through UJIRA: funding, pausing, revoking and approving. It uses a Stellar feature called a **fee-bump transaction**, where a second account pays the fee for yours.
 
 ### The Stellar minimum balance
 
@@ -46,7 +33,7 @@ Fees are not the only Stellar rule. Every Stellar account must keep a **minimum 
 
 ## Balances
 
-The dashboard is planned to show, for each mandate on each network:
+The dashboard is planned to show, for each mandate:
 
 - **Balance:** the money in the mandate.
 - **Committed:** money for payouts that are approved but not paid yet.
@@ -67,11 +54,11 @@ The platform never held any XLM. UJIRA sponsored the reserves of its funding acc
 
 ## Troubleshooting
 
-**My deposit does not show yet.** A deposit becomes available only after the network confirms it. Check the transaction on a public Stellar or Celo explorer (a website that shows every transaction on the network) using the transaction ID from your wallet.
+**My deposit does not show yet.** A deposit becomes available only after the network confirms it. Check the transaction on a public Stellar explorer (a website that shows every transaction on the network) using the transaction ID from your wallet.
 
 **My exchange will not withdraw to the mandate on Stellar.** That is expected. Withdraw to your own Stellar account first, then deposit from that account into the mandate.
 
-**I sent the wrong asset or used the wrong network.** Only the assets in the table above, on the network they are listed for, are accepted. What can be recovered after a wrong deposit is not documented yet.
+**I sent the wrong asset or used the wrong network.** Only USDC on Stellar is accepted. What can be recovered after a wrong deposit is not documented yet.
 
 **Can I fund from a bank account?** No. Stablecoin deposits are the only planned way to fund a mandate. Any new way to fund will be announced in the [changelog](../../CHANGELOG.md).
 
