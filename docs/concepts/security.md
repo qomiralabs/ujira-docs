@@ -15,7 +15,7 @@ Here is who holds the money at each step:
 | During a payout | Moving from the mandate straight to the recipient's own Stellar wallet, or to a licensed anchor that pays the recipient in local currency |
 | After a payout | With the recipient, in the account or wallet they chose |
 
-At no step does the money sit in an account that UJIRA controls. For a split payout, a local-currency leg goes through a licensed anchor to the recipient's bank, mobile money or cash, and a "Keep in dollars" leg goes straight to the recipient's own Stellar wallet.
+At no step does the money sit in an account that UJIRA controls. For a split payout, a local-currency leg goes through a licensed anchor to the recipient's bank, mobile money or cash, and a "USDC to your Stellar wallet" leg goes straight to the recipient's own Stellar wallet.
 
 ## Why it matters
 

@@ -21,7 +21,7 @@ A **transaction hash** is like a tracking number that the network itself issues.
 
 A split payout (see [Payouts and split payouts](payouts.md)) still has **one** receipt. It shows the total, then each leg with its method, amount, currency, fee and transaction hash.
 
-Recipients see their own version of the receipt. It shows who paid them, how much, in their currency, and when. It never shows network names or stablecoin names.
+Recipients see their own version of the receipt. It shows who paid them, how much and when. A local-currency payout shows only the recipient's own currency. A payout to their Stellar wallet shows the amount in USDC.
 
 ## Why it matters
 
@@ -35,7 +35,7 @@ The table above describes what a receipt contains; it does not name API fields. 
 
 The expert in Lagos from the [split payout example](payouts.md#example) gets one receipt that reads:
 
-> ₦480,000.00 paid: ₦336,000.00 to bank, $96.00 kept in dollars
+> ₦480,000.00 paid: ₦336,000.00 to bank, 96.00 USDC to your Stellar wallet
 
 The research marketplace's copy of the same receipt also shows the task ID, the mandate, the fee on each leg, and a Stellar transaction hash for each leg.
 
@@ -45,4 +45,4 @@ The research marketplace's copy of the same receipt also shows the task ID, the 
 
 **A split payout shows two transaction hashes.** That is expected. Each leg is its own payment on the network, so each has its own hash.
 
-**A recipient asks why their receipt does not mention Stellar.** Recipient receipts leave out network details on purpose, because recipients only need to know they were paid, how much, and when.
+**A recipient asks why their receipt does not mention Stellar.** They chose a local-currency method, so their receipt shows only their own currency. Receipts for "USDC to your Stellar wallet" payouts name USDC and Stellar.

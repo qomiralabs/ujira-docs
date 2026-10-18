@@ -22,11 +22,11 @@ The money goes straight into the mandate, which the principal controls. UJIRA ne
 
 Every blockchain charges a small **network fee** (often called **gas**) to process a transaction. On Stellar you would normally pay it in XLM, Stellar's own token. With UJIRA, a principal never needs XLM.
 
-UJIRA sponsors the fee on every transaction you sign through UJIRA: funding, pausing, revoking and approving. It uses a Stellar feature called a **fee-bump transaction**, where a second account pays the fee for yours.
+UJIRA sponsors the fee on every transaction you sign through UJIRA: funding, pausing, revoking and approving. It uses a Stellar feature called a **fee-bump transaction**, where a second account pays the fee for yours. UJIRA's fee, which the principal pays, covers these network costs. See [Who pays what](payouts.md#who-pays-what).
 
 ### The Stellar minimum balance
 
-Fees are not the only Stellar rule. Every Stellar account must keep a **minimum balance** of XLM, called **reserves**: a 1 XLM base reserve plus 0.5 XLM for the USDC **trustline** (the setting that lets a Stellar account hold USDC). You still never need XLM:
+Fees are not the only Stellar rule. Every Stellar account must keep a **minimum balance** of XLM, called **reserves**: a minimum balance of 1 XLM (two base reserves) plus 0.5 XLM for the USDC **trustline** (the setting that lets a Stellar account hold USDC). You still never need XLM:
 
 - **If you already have a Stellar account that holds USDC,** it already meets this minimum.
 - **If you do not,** UJIRA sets up a Stellar funding account that you own and control, and sponsors its minimum balance and trustline reserves using Stellar's **sponsored reserves** feature, where another account covers an account's reserves. UJIRA covers the reserves only; it never holds your funds.

@@ -39,7 +39,7 @@ UJIRA solves both problems with three ideas:
 4. The principal, or its agent, asks UJIRA to pay that recipient an amount.
 5. The mandate checks the rules. If the amount is above the approval threshold, a named person must approve it first.
 6. UJIRA pays out on Stellar: straight to the recipient's own wallet, or through a licensed anchor that pays local currency. See [Stellar and payout methods](chains-and-routing.md).
-7. The recipient receives local currency, or dollars if they chose to keep them, and both sides get a receipt.
+7. The recipient receives local currency, or USDC in their own Stellar wallet if they chose that, and both sides get a receipt.
 
 ## Example
 
@@ -48,7 +48,7 @@ A data platform pays 200 annotators in several countries every Friday.
 - It creates one mandate with a weekly budget of $10,000.00, a cap of $200.00 per payment, and an approval threshold of $150.00.
 - It deposits $10,000.00 in USDC, a dollar stablecoin, into the mandate.
 - Its review agent pays each annotator for approved tasks. Payments of $150.00 or less go straight through. A $180.00 bonus waits until a person on the finance team approves it.
-- One annotator receives local currency by mobile money. Another keeps the payout in dollars in their own wallet. Each payout has a receipt.
+- One annotator receives local currency by mobile money. Another takes USDC in their own Stellar wallet. Each payout has a receipt.
 
 The platform never chose a payout path, never built a payout system per country, and never handed its agent open access to its money.
 

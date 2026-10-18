@@ -50,7 +50,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **MCP (Model Context Protocol).** An open standard that lets AI applications connect to outside tools. See [MCP guide](mcp-guide.md).
 
-**Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep: a base reserve, plus a little more for each asset it holds. It is not a fee. UJIRA sponsors these reserves for the Stellar funding account it sets up for a principal, so principals never need XLM.
+**Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep, counted in base reserves of 0.5 XLM each: two base reserves (1 XLM) for the account itself, plus one more for each asset it holds, such as a USDC trustline. It is not a fee. UJIRA sponsors these reserves for the Stellar funding account it sets up for a principal, so principals never need XLM.
 
 **Sponsored reserves.** A Stellar feature that lets one account cover another account's minimum balance. The sponsored account still belongs to its owner.
 
@@ -68,7 +68,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Smart contract.** A small program that runs on a blockchain and enforces its rules for everyone.
 
-**Split payout.** One payout that the recipient takes two ways, such as part to their bank and part kept in dollars. See [Split payouts](concepts/payouts.md#split-payouts).
+**Split payout.** One payout that the recipient takes two ways, such as part to their bank and part as USDC to their own Stellar wallet. See [Split payouts](concepts/payouts.md#split-payouts).
 
 **Stablecoin.** A digital token designed to keep a steady value, usually one US dollar. UJIRA accepts USDC on Stellar.
 

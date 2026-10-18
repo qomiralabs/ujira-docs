@@ -22,9 +22,16 @@ Every request that moves money carries an **idempotency key**: a unique value yo
 
 You integrate once and pay people in many countries without building a payout system for each one. You never choose a payout path, and retries never double-pay anyone.
 
+## Who pays what
+
+- **The principal pays UJIRA's fee.** It covers the network costs of every payout. UJIRA also covers the cost of activating new Stellar accounts.
+- **The recipient receives the full amount.** "USDC to your Stellar wallet" costs the recipient nothing.
+- **Cash-out costs are shown first.** If the recipient chooses bank, mobile money or cash, the anchor's fee and exchange rate apply to that cash-out. Both are shown to the recipient before they choose the method.
+- **A principal can cover cash-out costs,** so the recipient gets the full local amount.
+
 ## Split payouts
 
-A **split payout** lets a recipient take one payout two ways. For example, part in local currency to their bank or mobile money, and part kept in dollars in a wallet they control. Recipients see this option as "Keep in dollars".
+A **split payout** lets a recipient take one payout two ways. For example, part in local currency to their bank or mobile money, and part as USDC in their own Stellar wallet. Recipients see this option as "USDC to your Stellar wallet".
 
 The principal still pays one amount. The mandate's caps and approvals apply to the total, and the split never changes what the principal approved. The recipient sets the split, not the principal.
 
@@ -34,23 +41,23 @@ The details in this table are planned and not final.
 
 | Rule | What happens |
 | --- | --- |
-| Number of legs | At most two: one local-currency method plus "Keep in dollars" |
+| Number of legs | At most two: one local-currency method plus "USDC to your Stellar wallet" |
 | Who sets the split | The recipient, as a standing rule: a percentage or a fixed amount. They can change it at any time in the onboarding widget |
 | Minimums | If one leg would be below its method's minimum, it merges into the other leg, and the recipient is told why |
 | A leg fails | UJIRA retries it, then falls back to the recipient's main method. The status reads "Partly paid" until every leg arrives. Money is never left stuck in between |
 | Retries | Each leg has its own idempotency key, made from the payout's key, so a retry never pays a leg twice |
 | Fees | Shown per leg on the receipt, never hidden |
-| Countries | "Keep in dollars" is offered only where local rules allow holding digital dollars |
+| Countries | "USDC to your Stellar wallet" is offered only where local rules allow holding digital dollars |
 
-A local-currency leg goes through a licensed anchor to the recipient's chosen method, and a "Keep in dollars" leg goes straight to the recipient's own Stellar wallet. UJIRA never holds any part of either.
+A local-currency leg goes through a licensed anchor to the recipient's chosen method, and a "USDC to your Stellar wallet" leg goes straight to the recipient's own Stellar wallet. UJIRA never holds any part of either.
 
 ## Example
 
-A research marketplace owes an expert in Lagos ₦480,000.00. The expert has set a split: keep 30 percent in dollars, send the rest to their bank.
+A research marketplace owes an expert in Lagos ₦480,000.00. The expert has set a split: 30 percent as USDC to their Stellar wallet, the rest to their bank.
 
 1. The marketplace asks UJIRA to pay ₦480,000.00, with its own task ID as the idempotency key.
 2. The amount is above the mandate's approval threshold, so it waits until the marketplace's finance lead approves it.
-3. UJIRA splits the payout into two legs: ₦336,000.00 to the expert's bank, and the other 30 percent, ₦144,000.00, as $96.00 at that moment's exchange rate, kept in dollars in the expert's own wallet.
+3. UJIRA splits the payout into two legs: ₦336,000.00 to the expert's bank, and the other 30 percent, ₦144,000.00, as 96.00 USDC at that moment's exchange rate, paid to the expert's own Stellar wallet.
 4. Both legs arrive. The status reads "Paid", and one receipt shows the total and each leg.
 
 The marketplace approved and paid one amount. It did nothing different because the expert chose a split.
@@ -61,6 +68,6 @@ The marketplace approved and paid one amount. It did nothing different because t
 
 **The status says "Partly paid".** One leg of a split payout has not arrived yet. UJIRA retries it, then falls back to the recipient's main method.
 
-**A recipient did not get the split they asked for.** One leg was probably below its method's minimum and merged into the other leg, or "Keep in dollars" is not offered in their country, so the whole payout went to their main method. When a leg merges because of a minimum, the recipient is told why.
+**A recipient did not get the split they asked for.** One leg was probably below its method's minimum and merged into the other leg, or "USDC to your Stellar wallet" is not offered in their country, so the whole payout went to their main method. When a leg merges because of a minimum, the recipient is told why.
 
 **Which statuses can a payout have?** The full list will be published in the [API reference](../api-reference.md) when the API is final.
