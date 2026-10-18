@@ -4,7 +4,7 @@
 
 ## What it is
 
-A **payout** is one payment from a mandate to one recipient, for an amount the principal owes them. You ask UJIRA to pay a recipient an amount, and UJIRA turns that request into money in the recipient's account, in their own currency.
+A **payout** is one payment from a mandate to one recipient, for an amount the principal owes them. You ask UJIRA to pay a recipient an amount, and UJIRA turns that request into money for the recipient. Bank, mobile money and cash pay the recipient in their own currency; "USDC to your Stellar wallet" pays USDC.
 
 You can ask for payouts one at a time, or many at once in a **batch** (for example, everyone you owe for this week).
 
@@ -24,10 +24,11 @@ You integrate once and pay people in many countries without building a payout sy
 
 ## Who pays what
 
-- **The principal pays UJIRA's fee.** It covers the network costs of every payout. UJIRA also covers the cost of activating new Stellar accounts.
-- **The recipient receives the full amount.** "USDC to your Stellar wallet" costs the recipient nothing.
-- **Cash-out costs are shown first.** If the recipient chooses bank, mobile money or cash, the anchor's fee and exchange rate apply to that cash-out. Both are shown to the recipient before they choose the method.
-- **A principal can cover cash-out costs,** so the recipient gets the full local amount.
+- **The principal pays UJIRA's fee.** It covers the network costs of every payout.
+- **Activation is free for recipients.** UJIRA covers the cost of activating a new Stellar account. If a recipient's existing Stellar wallet has no USDC trustline yet, UJIRA also covers the 0.5 XLM USDC trustline reserve. The recipient pays nothing for either.
+- **The recipient receives the full dollar amount.** Every dollar the principal pays reaches the recipient: as USDC in their own Stellar wallet, or as the dollar amount UJIRA sends to the anchor. "USDC to your Stellar wallet" costs the recipient nothing.
+- **Cash-out costs apply only when converting.** If the recipient chooses bank, mobile money or cash, the anchor's fee and exchange rate apply only to converting those dollars into local currency. Both are shown to the recipient before they choose the method.
+- **A principal can cover cash-out costs,** so the recipient receives the full local amount.
 
 ## Split payouts
 
@@ -53,14 +54,16 @@ A local-currency leg goes through a licensed anchor to the recipient's chosen me
 
 ## Example
 
-A research marketplace owes an expert in Lagos ₦480,000.00. The expert has set a split: 30 percent as USDC to their Stellar wallet, the rest to their bank.
+A research marketplace owes an expert in Lagos ₦480,000.00. The expert has set a split: 30 percent as USDC to their Stellar wallet, the rest to their bank. The marketplace covers cash-out costs for its experts.
 
 1. The marketplace asks UJIRA to pay ₦480,000.00, with its own task ID as the idempotency key.
 2. The amount is above the mandate's approval threshold, so it waits until the marketplace's finance lead approves it.
-3. UJIRA splits the payout into two legs: ₦336,000.00 to the expert's bank, and the other 30 percent, ₦144,000.00, as 96.00 USDC at that moment's exchange rate, paid to the expert's own Stellar wallet.
+3. UJIRA splits the payout into two legs: ₦336,000.00 to the expert's bank, and the other 30 percent, ₦144,000.00, as 96.00 USDC at that moment's exchange rate, paid to the expert's own Stellar wallet. The bank leg arrives in full, because the marketplace covers the anchor's cash-out fee.
 4. Both legs arrive. The status reads "Paid", and one receipt shows the total and each leg.
 
 The marketplace approved and paid one amount. It did nothing different because the expert chose a split.
+
+An illustration, not a statement of coverage.
 
 ## Troubleshooting
 

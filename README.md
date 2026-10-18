@@ -54,9 +54,15 @@ npx --yes markdownlint-cli2@0.23.3
 
 # Self test for the link check
 ./scripts/test-check-links.sh
+
+# Fail if the glossary is not in alphabetical order
+./scripts/check-glossary-order.py
+
+# Self test for the glossary order check
+./scripts/test-check-glossary-order.sh
 ```
 
-All seven commands exit with code 0 when the docs are clean. The invisible character check and the link check need Python 3 and use its standard library only.
+All nine commands exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only.
 
 ## Invisible characters
 
