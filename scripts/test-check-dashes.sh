@@ -1,66 +1,118 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: Apache-2.0
-# Self test for check-dashes.sh. Run: ./scripts/test-check-dashes.sh
+# Copyright 2026 Qomira Labs
+#
+# Shared file: the same copy lives in ujira, ujira-contracts, ujira-docs and
+# ujira-mcp (qomiralabs/ujira#303). Change all four together.
+#
+# Self test for check-dashes.sh. Run: scripts/test-check-dashes.sh
+# Each case builds a throwaway git repository, commits files to it and checks
+# the exit code and output. Dashes are written as bytes, so this file holds
+# none.
 set -euo pipefail
 
 script="$(cd "$(dirname "$0")" && pwd)/check-dashes.sh"
-work=$(mktemp -d)
+work=$(cd "$(mktemp -d)" && pwd -P)
 trap 'rm -rf "$work"' EXIT
 
+passed=0
 failures=0
-pass() { echo "ok: $1"; }
-fail() { echo "FAIL: $1" >&2; failures=$((failures + 1)); }
+em=$(printf '\xe2\x80\x94')
+en=$(printf '\xe2\x80\x93')
 
-# Runs check-dashes.sh in a directory and prints its exit code.
-run_in() {
-  local dir=$1
-  shift
-  local code=0
-  (cd "$dir" && env "$@" "$script") >/dev/null 2>&1 || code=$?
-  echo "$code"
+# repo <name>: a fresh repository; files are added by the caller.
+repo() {
+  dir="$work/$1"
+  git init -q "$dir"
+  git -C "$dir" config user.name Test
+  git -C "$dir" config user.email test@example.invalid
+  git -C "$dir" config commit.gpgsign false
+  git -C "$dir" config core.hooksPath /dev/null
 }
 
-# A fake git that fails every command.
-mkdir -p "$work/git-fails"
-cat >"$work/git-fails/git" <<'EOF'
-#!/usr/bin/env bash
-exit 128
-EOF
-chmod +x "$work/git-fails/git"
+commit() { git -C "$1" add -A && git -C "$1" commit -q --allow-empty -m "test"; }
 
-# A fake git that finds the repository but fails to list its files.
-mkdir -p "$work/listing-fails" "$work/fake-repo"
-cat >"$work/listing-fails/git" <<EOF
-#!/usr/bin/env bash
-if [ "\$1" = "rev-parse" ]; then echo "$work/fake-repo"; exit 0; fi
-exit 128
-EOF
-chmod +x "$work/listing-fails/git"
+# expect <case name> <wanted exit code> <dir> [text the output must contain]
+expect() {
+  local name=$1 want=$2 dir=$3 needle=${4:-} got=0 out
+  out=$(cd "$dir" && "$script" 2>&1) || got=$?
+  if [ "$got" -eq "$want" ] && { [ -z "$needle" ] || grep -q -F -e "$needle" <<<"$out"; }; then
+    echo "PASS  $name"
+    passed=$((passed + 1))
+  else
+    echo "FAIL  $name (wanted exit $want${needle:+ and output $needle}, got $got)"
+    printf '%s\n' "$out" | sed 's/^/      /'
+    failures=$((failures + 1))
+  fi
+}
 
-# A real repository with one clean file.
-mkdir -p "$work/clean"
-git -C "$work/clean" init -q
-printf 'plain text, no dashes\n' >"$work/clean/page.md"
+repo clean
+printf 'plain text, no dashes - only a hyphen\n' >"$work/clean/page.md"
+commit "$work/clean"
+expect "a clean file passes" 0 "$work/clean" "No em or en dashes found."
 
-# A real repository with one file containing an em dash, written as bytes.
-mkdir -p "$work/dirty"
-git -C "$work/dirty" init -q
-printf 'bad \xe2\x80\x94 here\n' >"$work/dirty/page.md"
+repo em
+printf 'one\nbad %s here\n' "$em" >"$work/em/page.md"
+commit "$work/em"
+expect "an em dash fails with its path and line" 1 "$work/em" "page.md:2:"
 
-code=$(run_in "$work/clean" PATH="$work/git-fails:$PATH")
-if [ "$code" -ne 0 ]; then pass "fails when git cannot find the repository"; else fail "exit 0 when git cannot find the repository"; fi
+repo en
+printf 'pages 1%s5\n' "$en" >"$work/en/page.md"
+commit "$work/en"
+expect "an en dash fails with its path and line" 1 "$work/en" "page.md:1:"
 
-code=$(run_in "$work/fake-repo" PATH="$work/listing-fails:$PATH")
-if [ "$code" -ne 0 ]; then pass "fails when git cannot list files"; else fail "exit 0 when git cannot list files"; fi
+repo binary
+printf '\000\001%s\002' "$em" >"$work/binary/image.bin"
+commit "$work/binary"
+expect "a binary file is skipped" 0 "$work/binary"
 
-code=$(run_in "$work/clean" PATH="$PATH")
-if [ "$code" -eq 0 ]; then pass "passes on a clean repository"; else fail "exit $code on a clean repository"; fi
+repo space
+mkdir -p "$work/space/my docs"
+printf 'bad %s here\n' "$em" >"$work/space/my docs/a page.md"
+commit "$work/space"
+expect "a file whose name has a space is checked" 1 "$work/space" "my docs/a page.md:1:"
 
-code=$(run_in "$work/dirty" PATH="$PATH")
-if [ "$code" -eq 1 ]; then pass "fails with exit 1 when a file has a dash"; else fail "exit $code when a file has a dash"; fi
-
-if [ "$failures" -ne 0 ]; then
-  echo "$failures test(s) failed." >&2
-  exit 1
+repo nested
+mkdir -p "$work/nested/sub"
+printf 'clean\n' >"$work/nested/top.md"
+printf 'x %s y\n' "$en" >"$work/nested/sub/deep.ts"
+commit "$work/nested"
+(cd "$work/nested/sub" && "$script" >/dev/null 2>&1) && got=0 || got=$?
+if [ "$got" -eq 1 ]; then
+  echo "PASS  run from a subfolder still checks the whole repository"
+  passed=$((passed + 1))
+else
+  echo "FAIL  run from a subfolder still checks the whole repository (got $got)"
+  failures=$((failures + 1))
 fi
-echo "All check-dashes tests passed."
+
+repo untracked
+printf 'clean\n' >"$work/untracked/page.md"
+commit "$work/untracked"
+printf 'bad %s here\n' "$em" >"$work/untracked/scratch.md"
+expect "an untracked file is not checked" 0 "$work/untracked"
+
+mkdir -p "$work/not-a-repo"
+expect "outside a git repository it fails closed" 2 "$work/not-a-repo"
+
+# A git that finds the repository but cannot search it.
+mkdir -p "$work/fake-bin"
+cat >"$work/fake-bin/git" <<FAKE
+#!/usr/bin/env bash
+if [ "\$1" = "rev-parse" ]; then echo "$work/clean"; exit 0; fi
+exit 128
+FAKE
+chmod +x "$work/fake-bin/git"
+got=0
+(cd "$work/clean" && PATH="$work/fake-bin:$PATH" "$script" >/dev/null 2>&1) || got=$?
+if [ "$got" -eq 2 ]; then
+  echo "PASS  a git failure fails closed"
+  passed=$((passed + 1))
+else
+  echo "FAIL  a git failure fails closed (got $got)"
+  failures=$((failures + 1))
+fi
+
+echo
+echo "$passed passed, $failures failed"
+[ "$failures" -eq 0 ]
