@@ -24,7 +24,7 @@ import sys
 def advisory_id(via: dict) -> str:
     """The GHSA id from the advisory URL, or npm's source id when there is no
     GHSA URL, so no two advisories share an empty id."""
-    match = re.search(r"GHSA(?:-[23456789cfghjmpqrvwx]{4}){3}", str(via.get("url") or ""))
+    match = re.search(r"GHSA(?:-[0-9a-z]{4}){3}", str(via.get("url") or ""))
     if match:
         return match.group(0)
     source = via.get("source")
