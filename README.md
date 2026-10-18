@@ -48,9 +48,15 @@ npx --yes markdownlint-cli2@0.23.3
 
 # Self test for the invisible character check
 ./scripts/test-check-invisible-characters.sh
+
+# Fail if any relative link or heading link does not resolve
+./scripts/check-links.py
+
+# Self test for the link check
+./scripts/test-check-links.sh
 ```
 
-All five commands exit with code 0 when the docs are clean. The invisible character check needs Python 3 and uses its standard library only.
+All seven commands exit with code 0 when the docs are clean. The invisible character check and the link check need Python 3 and use its standard library only.
 
 ## Invisible characters
 

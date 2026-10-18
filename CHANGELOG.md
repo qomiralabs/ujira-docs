@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Glossary of the terms used across the docs.
 - Placeholder pages, marked Planned, for the API reference and the MCP guide.
 - Markdown lint configuration and a script that fails on em and en dashes.
+- A link check script, with a self test, that fails when a relative link or heading link does not resolve.
 
 ### Changed
 
