@@ -25,7 +25,8 @@ env:
   GITLEAKS_VERSION: 8.30.1
   GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
   # markdownlint-cli2@0.23.3 (MIT), locked with its whole dependency tree in
-  # tools/markdownlint/package-lock.json. Bump both together.
+  # tools/markdownlint/package-lock.json, with katex and smol-toml raised by
+  # npm overrides past their advisories. Bump both together.
   MARKDOWNLINT_CLI2_VERSION: 0.23.3
   NODE_VERSION: 24.21.0
 
@@ -117,6 +118,22 @@ jobs:
 
       - name: Lint Markdown
         run: tools/markdownlint/node_modules/.bin/markdownlint-cli2
+
+      # Fails on any advisory in the locked tree that is not in the reviewed
+      # accepted list, and on an accepted one that is no longer reported.
+      - name: Audit the markdownlint dependencies
+        run: |
+          code=0
+          (cd tools/markdownlint && npm audit --json) >"${RUNNER_TEMP}/audit.json" || code=$?
+          # npm audit exits 1 when it reports any advisory; anything else is a failure to run.
+          if [ "$code" -gt 1 ]; then
+            cat "${RUNNER_TEMP}/audit.json"
+            exit "$code"
+          fi
+          scripts/check-npm-audit.py "${RUNNER_TEMP}/audit.json" tools/markdownlint/audit-accepted.json
+
+      - name: Test the audit check
+        run: scripts/test-check-npm-audit.sh
 
   # Fails on any em dash or en dash in the tree.
   dashes:

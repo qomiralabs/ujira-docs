@@ -57,7 +57,7 @@ tools/markdownlint/node_modules/.bin/markdownlint-cli2
 ./scripts/test-check-links.sh
 ```
 
-All of these exit with code 0 when the docs are clean, and CI runs each of them on every pull request in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old; bump the version there and in the workflow together. The invisible character check and the link check need Python 3 and use its standard library only.
+All of these exit with code 0 when the docs are clean, and CI runs each of them on every pull request in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The job also runs `npm audit` on that tree and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18). The invisible character check and the link check need Python 3 and use its standard library only.
 
 ## Invisible characters
 
