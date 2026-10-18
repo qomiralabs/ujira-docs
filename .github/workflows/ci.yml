@@ -133,6 +133,11 @@ jobs:
         with:
           persist-credentials: false
 
+      # Probe only, never merged: writes an em dash into the checkout, built
+      # from its bytes, so the check below must fail.
+      - name: Plant an em dash (probe)
+        run: printf 'probe \xe2\x80\x94 dash\n' >>README.md
+
       - name: Check for dashes
         run: scripts/check-dashes.sh
 

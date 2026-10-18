@@ -95,3 +95,5 @@ Keep `.env` files untracked; only `.env.example` belongs in git.
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
+
+See [the probe section](#no-such-heading).
