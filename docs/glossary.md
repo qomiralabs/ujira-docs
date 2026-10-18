@@ -10,6 +10,8 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 ## Terms
 
+**Anchor.** A licensed business that connects the Stellar network to local money. It receives a digital dollar on Stellar and pays the recipient in local currency, into a bank account, to mobile money or as cash. See [Stellar and payout methods](concepts/chains-and-routing.md).
+
 **Agent.** Software that acts for a principal, such as an AI agent that reviews finished tasks and pays for them. An agent holds a key that can only ask a mandate for payouts inside its rules.
 
 **API (application programming interface).** The way your own code talks to UJIRA. See [API reference](api-reference.md).
@@ -22,7 +24,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Block explorer.** A public website that shows every transaction on a blockchain. You can look up a receipt's transaction hash there.
 
-**Blockchain, or chain.** A public network that records every payment so anyone can check it. UJIRA uses two: Stellar and Celo.
+**Blockchain, or chain.** A public network that records every payment so anyone can check it. UJIRA uses Stellar.
 
 **Corridor.** The route money takes to reach a recipient in a given country, with a given payout method.
 
@@ -32,9 +34,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Fee-bump transaction.** A Stellar feature that lets a second account pay the network fee for your transaction. UJIRA uses it to sponsor Stellar fees.
 
-**Fee currency.** A Celo feature that lets a transaction pay its network fee in a stablecoin, such as USDC or USDm, instead of CELO.
-
-**Funding address.** A mandate's own address on each network, which deposits go into. On Stellar you deposit into it from your own Stellar account, not straight from an exchange.
+**Funding address.** A mandate's own address on Stellar, which deposits go into. On Stellar you deposit into it from your own Stellar account, not straight from an exchange.
 
 **Gas, or network fee.** The small fee a blockchain charges to process a transaction.
 
@@ -50,7 +50,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **MCP (Model Context Protocol).** An open standard that lets AI applications connect to outside tools. See [MCP guide](mcp-guide.md).
 
-**Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep: a base reserve, plus a little more for each asset it holds. It is not a fee. UJIRA sponsors these reserves for the Stellar funding account it sets up for a principal, so principals never need XLM.
+**Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep, counted in base reserves of 0.5 XLM each: two base reserves (1 XLM) for the account itself, plus one more for each asset it holds, such as a USDC trustline. It is not a fee. UJIRA sponsors these reserves for the Stellar funding account it sets up for a principal, so principals never need XLM.
 
 **Sponsored reserves.** A Stellar feature that lets one account cover another account's minimum balance. The sponsored account still belongs to its owner.
 
@@ -64,13 +64,13 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Recipient.** The person who gets paid.
 
-**Router.** The part of UJIRA that picks the chain for each payout. See [Chains and routing](concepts/chains-and-routing.md).
+**Routing configuration.** The list, kept by UJIRA, of which anchors serve which countries and payout methods. See [Stellar and payout methods](concepts/chains-and-routing.md).
 
 **Smart contract.** A small program that runs on a blockchain and enforces its rules for everyone.
 
-**Split payout.** One payout that the recipient takes two ways, such as part to their bank and part kept in dollars. See [Split payouts](concepts/payouts.md#split-payouts).
+**Split payout.** One payout that the recipient takes two ways, such as part to their bank and part as USDC to their own Stellar wallet. See [Split payouts](concepts/payouts.md#split-payouts).
 
-**Stablecoin.** A digital token designed to keep a steady value, usually one US dollar. UJIRA accepts USDC on Stellar, and USDC or USDm on Celo.
+**Stablecoin.** A digital token designed to keep a steady value, usually one US dollar. UJIRA accepts USDC on Stellar.
 
 **Transaction hash.** The unique ID a blockchain gives a payment, like a tracking number anyone can look up.
 
@@ -80,7 +80,7 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 ## Example
 
-The sentence "The agent requested a payout with an idempotency key, and the router settled it on Celo" means: the software acting for the business asked to pay someone, attached a unique value so a retry could not pay twice, and UJIRA chose the Celo network to deliver it.
+The sentence "The agent requested a payout with an idempotency key, and an anchor paid the recipient in local currency" means: the software acting for the business asked to pay someone, attached a unique value so a retry could not pay twice, and a licensed business on Stellar turned the digital dollars into the recipient's own currency.
 
 ## Troubleshooting
 

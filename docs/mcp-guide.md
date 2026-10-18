@@ -16,7 +16,7 @@ An agent that already uses MCP can pay people through UJIRA without custom integ
 
 - **The same guardrails apply everywhere.** The MCP server uses the same payout system as the dashboard and the [API](api-reference.md), so the same [mandate](concepts/mandates.md) rules and approvals apply.
 - **Reading is open; paying is gated.** Actions that only read, such as checking a payout's status or reading a receipt, are open to a connected client. Actions that move money are gated by the mandate's rules and its approvals.
-- **The chain is hidden.** As with the API, the router picks the chain. See [Chains and routing](concepts/chains-and-routing.md).
+- **The payout path is handled for you.** As with the API, UJIRA picks the path for the method each recipient chose. See [Stellar and payout methods](concepts/chains-and-routing.md).
 
 ## Example
 

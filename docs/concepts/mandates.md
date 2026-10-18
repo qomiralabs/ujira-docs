@@ -25,7 +25,7 @@ The principal can also **pause** a mandate (stop all payouts until it is resumed
 
 A mandate is what makes it safe to let software pay people. An **agent**, the software that acts for a principal, holds a key that can only ask the mandate for payouts. The key cannot change the rules, cannot raise the budget, and cannot pay anyone outside the allowed list. If the key leaks, the most it can do is ask for payouts the rules already allow, and the principal can pause the mandate at once.
 
-The same rules apply on both networks UJIRA uses, Stellar and Celo. UJIRA keeps two versions of the mandate contract, one for each network, built from one specification and reviewed together, so a rule means the same thing wherever a payout settles. You write the rules once and never think about which network a payout used.
+Each mandate is a smart contract on Stellar, written for Soroban, Stellar's smart contract platform. Because the network runs the contract, the same rules hold for every payout, whichever method the recipient chose. You write the rules once.
 
 ## Approvals
 

@@ -38,19 +38,19 @@ UJIRA solves both problems with three ideas:
 3. The principal invites a recipient, who verifies their identity once and picks how they want to be paid, for example a bank account or mobile money. See [Recipient onboarding](recipient-onboarding.md).
 4. The principal, or its agent, asks UJIRA to pay that recipient an amount.
 5. The mandate checks the rules. If the amount is above the approval threshold, a named person must approve it first.
-6. UJIRA picks the best network for that recipient's country and pays out. See [Chains and routing](chains-and-routing.md).
-7. The recipient receives local currency, and both sides get a receipt.
+6. UJIRA pays out on Stellar: straight to the recipient's own wallet, or through a licensed anchor that pays local currency. See [Stellar and payout methods](chains-and-routing.md).
+7. The recipient receives local currency, or USDC in their own Stellar wallet if they chose that, and both sides get a receipt.
 
 ## Example
 
-A data platform pays 200 annotators in Kenya and Nigeria every Friday.
+A data platform pays 200 annotators in several countries every Friday.
 
 - It creates one mandate with a weekly budget of $10,000.00, a cap of $200.00 per payment, and an approval threshold of $150.00.
 - It deposits $10,000.00 in USDC, a dollar stablecoin, into the mandate.
 - Its review agent pays each annotator for approved tasks. Payments of $150.00 or less go straight through. A $180.00 bonus waits until a person on the finance team approves it.
-- An annotator in Nairobi receives shillings on M-Pesa, a mobile money service. An annotator in Lagos receives naira in a bank account. Each payout has a receipt.
+- One annotator receives local currency by mobile money. Another takes USDC in their own Stellar wallet. Each payout has a receipt.
 
-The platform never chose a network, never built a payout system per country, and never handed its agent open access to its money.
+The platform never chose a payout path, never built a payout system per country, and never handed its agent open access to its money.
 
 ## Troubleshooting
 

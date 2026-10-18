@@ -12,16 +12,16 @@ Here is who holds the money at each step:
 | --- | --- |
 | Before funding | In the principal's own wallet or exchange account |
 | After funding | In the principal's mandate, under the mandate's rules |
-| During a payout | Moving from the mandate to the recipient's payout method, through a licensed payout service where money must become local cash or a bank deposit |
+| During a payout | Moving from the mandate straight to the recipient's own Stellar wallet, or to a licensed anchor that pays the recipient in local currency |
 | After a payout | With the recipient, in the account or wallet they chose |
 
-At no step does the money sit in an account that UJIRA controls. For a split payout, a local-currency leg goes through a licensed payout service to the recipient's bank, mobile money or cash pickup, and a "Keep in dollars" leg goes straight to the recipient's own wallet.
+At no step does the money sit in an account that UJIRA controls. For a split payout, a local-currency leg goes through a licensed anchor to the recipient's bank, mobile money or cash, and a "USDC to your Stellar wallet" leg goes straight to the recipient's own Stellar wallet.
 
 ## Why it matters
 
 - **Less to trust.** If UJIRA never holds your money, UJIRA cannot lose it or spend it.
 - **Safe for agents.** An agent's key can only ask a mandate for payouts that its rules already allow. A leaked key cannot drain the mandate beyond those rules, and the principal can pause or revoke the mandate at once.
-- **Checkable.** Every payout settles on a public network and leaves a receipt with a transaction hash, so anyone can verify it.
+- **Checkable.** Every payout settles on Stellar, a public network, and leaves a receipt with a transaction hash, so anyone can verify it.
 
 ## What protects the money
 
@@ -30,7 +30,7 @@ At no step does the money sit in an account that UJIRA controls. For a split pay
 - **Pause and revoke.** The principal can stop a mandate at any time.
 - **No double payments.** Every request that moves money carries an idempotency key, so a retried request is never paid twice. See [Payouts and split payouts](payouts.md#idempotency).
 - **Separation between customers.** Each principal's records are isolated at the database level from other principals' records.
-- **Audited before mainnet.** The mandate contracts will be independently audited before mainnet (**mainnet** is the live network, where real money moves).
+- **Audited before mainnet.** The mandate contract will be independently audited before mainnet (**mainnet** is the live network, where real money moves).
 
 ## Example
 

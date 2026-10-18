@@ -16,11 +16,11 @@ These docs explain how UJIRA works, in plain English, for developers who are new
 ### Concepts
 
 - [Mandates](docs/concepts/mandates.md): the spending rules that limit what an agent can pay, and the approvals above a threshold
-- [Funding](docs/concepts/funding.md): how you put money into a mandate with a stablecoin deposit, and why you never need to hold network tokens for fees
+- [Funding](docs/concepts/funding.md): how you put money into a mandate with a stablecoin deposit, and why you never need XLM
 - [Payouts and split payouts](docs/concepts/payouts.md): how a payout becomes money in a person's account, and how a recipient can take one payout two ways
 - [Receipts](docs/concepts/receipts.md): the permanent, verifiable proof of every payout
 - [Recipient onboarding and the embed widget](docs/concepts/recipient-onboarding.md): how a person becomes payable, inside your own product
-- [Chains and routing](docs/concepts/chains-and-routing.md): why UJIRA runs on Stellar and Celo, and how it picks one for each payout
+- [Stellar and payout methods](docs/concepts/chains-and-routing.md): how UJIRA settles on Stellar and reaches people in their own Stellar wallet, or in local currency through licensed anchors
 - [Security and the non-custodial model](docs/concepts/security.md): who holds the money at each step, and what protects it
 
 ### Reference
@@ -48,9 +48,15 @@ npx --yes markdownlint-cli2@0.23.3
 
 # Self test for the invisible character check
 ./scripts/test-check-invisible-characters.sh
+
+# Fail if any relative link or heading link does not resolve
+./scripts/check-links.py
+
+# Self test for the link check
+./scripts/test-check-links.sh
 ```
 
-All five commands exit with code 0 when the docs are clean. The invisible character check needs Python 3 and uses its standard library only.
+All seven commands exit with code 0 when the docs are clean. The invisible character check and the link check need Python 3 and use its standard library only.
 
 ## Invisible characters
 
