@@ -10,9 +10,9 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 ## Terms
 
-**Anchor.** A licensed business that connects the Stellar network to local money. It receives a digital dollar on Stellar and pays the recipient in local currency, into a bank account, to mobile money or as cash. See [Stellar and payout methods](concepts/chains-and-routing.md).
-
 **Agent.** Software that acts for a principal, such as an AI agent that reviews finished tasks and pays for them. An agent holds a key that can only ask a mandate for payouts inside its rules.
+
+**Anchor.** A licensed business that connects the Stellar network to local money. It receives a digital dollar on Stellar and pays the recipient in local currency, into a bank account, to mobile money or as cash. See [Stellar and payout methods](concepts/chains-and-routing.md).
 
 **API (application programming interface).** The way your own code talks to UJIRA. See [API reference](api-reference.md).
 
@@ -52,8 +52,6 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Minimum balance and reserve.** On Stellar, an amount of XLM an account must keep, counted in base reserves of 0.5 XLM each: two base reserves (1 XLM) for the account itself, plus one more for each asset it holds, such as a USDC trustline. It is not a fee. UJIRA sponsors these reserves for the Stellar funding account it sets up for a principal, so principals never need XLM.
 
-**Sponsored reserves.** A Stellar feature that lets one account cover another account's minimum balance. The sponsored account still belongs to its owner.
-
 **Minor units.** The smallest unit of a currency, such as cents for US dollars or kobo for naira. UJIRA counts money in whole minor units so amounts never round.
 
 **Payout.** One payment from a mandate to one recipient. See [Payouts](concepts/payouts.md).
@@ -69,6 +67,8 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 **Smart contract.** A small program that runs on a blockchain and enforces its rules for everyone.
 
 **Split payout.** One payout that the recipient takes two ways, such as part to their bank and part as USDC to their own Stellar wallet. See [Split payouts](concepts/payouts.md#split-payouts).
+
+**Sponsored reserves.** A Stellar feature that lets one account cover another account's minimum balance. The sponsored account still belongs to its owner.
 
 **Stablecoin.** A digital token designed to keep a steady value, usually one US dollar. UJIRA accepts USDC on Stellar.
 
