@@ -7,7 +7,9 @@
 # exception after the fix lands.
 #
 # Advisories are read from the objects in each package's "via" list; a
-# package that only inherits an advisory from a dependency adds nothing.
+# package that only inherits an advisory from a dependency adds nothing. Each
+# is keyed on its GHSA id, or on npm's source id (npm-<n>) when it has no
+# GHSA URL.
 #
 # Standard library only, no dependencies.
 #
@@ -15,11 +17,20 @@
 # Exit codes: 0 only accepted advisories, 1 an advisory is not accepted or an
 # accepted one is gone, 2 a file could not be read.
 import json
+import re
 import sys
 
 
-def advisory_id(url: str) -> str:
-    return url.rstrip("/").rsplit("/", 1)[-1]
+def advisory_id(via: dict) -> str:
+    """The GHSA id from the advisory URL, or npm's source id when there is no
+    GHSA URL, so no two advisories share an empty id."""
+    match = re.search(r"GHSA(?:-[23456789cfghjmpqrvwx]{4}){3}", str(via.get("url") or ""))
+    if match:
+        return match.group(0)
+    source = via.get("source")
+    if isinstance(source, int) and not isinstance(source, bool):
+        return f"npm-{source}"
+    raise ValueError(f"advisory {via.get('title')!r} has neither a GHSA URL nor a source id")
 
 
 def main() -> int:
@@ -43,10 +54,14 @@ def main() -> int:
         return 2
 
     found = {}
-    for package in vulnerabilities.values():
-        for via in package.get("via", []):
-            if isinstance(via, dict):
-                found[advisory_id(via.get("url", ""))] = via
+    try:
+        for package in vulnerabilities.values():
+            for via in package.get("via", []):
+                if isinstance(via, dict):
+                    found[advisory_id(via)] = via
+    except ValueError as error:
+        print(f"check-npm-audit: {error}", file=sys.stderr)
+        return 2
 
     failed = False
     for ident in sorted(found):

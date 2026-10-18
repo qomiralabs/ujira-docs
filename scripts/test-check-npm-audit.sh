@@ -77,6 +77,20 @@ json.dump({"accepted": [{"id": "GHSA-aaaa-bbbb-cccc", "package": "pkg", "reason"
 PY
 expect "an accepted entry without a reason fails" 2 "$work/one.json" "$work/noreason.json"
 
+# Advisories without a URL are keyed on npm's source id, so two of them stay
+# two findings instead of collapsing into one empty id.
+python3 - "$work/nourl.json" <<'PY'
+import json, sys
+vulns = {f"pkg{i}": {"name": f"pkg{i}", "severity": "low", "via": [
+    {"source": 1000 + i, "name": f"pkg{i}", "title": "t", "severity": "low", "range": "*"}]}
+    for i in (1, 2)}
+json.dump({"auditReportVersion": 2, "vulnerabilities": vulns}, open(sys.argv[1], "w"))
+PY
+accepted "$work/npm-both.json" npm-1001 npm-1002
+expect "two advisories without a URL are told apart" 0 "$work/nourl.json" "$work/npm-both.json"
+accepted "$work/npm-one.json" npm-1001
+expect "accepting one advisory without a URL does not accept the other" 1 "$work/nourl.json" "$work/npm-one.json"
+
 printf 'not json' >"$work/broken.json"
 expect "an unreadable report fails" 2 "$work/broken.json" "$work/none.json"
 
