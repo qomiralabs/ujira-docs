@@ -109,12 +109,11 @@ jobs:
         run: |
           node --version | grep -qx "v${NODE_VERSION}" || { echo "node is not ${NODE_VERSION}" >&2; exit 1; }
           npm ci --ignore-scripts --no-audit --no-fund
-          version=$(node_modules/.bin/markdownlint-cli2 --help | head -n 1)
-          echo "$version"
-          case "$version" in
-            "markdownlint-cli2 v${MARKDOWNLINT_CLI2_VERSION} "*) ;;
-            *) echo "markdownlint-cli2 is not ${MARKDOWNLINT_CLI2_VERSION}" >&2; exit 1 ;;
-          esac
+          # Read from the installed package, since the tool's --help exits
+          # non-zero.
+          version=$(node -p 'require("./node_modules/markdownlint-cli2/package.json").version')
+          echo "markdownlint-cli2 $version"
+          [ "$version" = "${MARKDOWNLINT_CLI2_VERSION}" ] || { echo "markdownlint-cli2 is not ${MARKDOWNLINT_CLI2_VERSION}" >&2; exit 1; }
 
       - name: Lint Markdown
         run: tools/markdownlint/node_modules/.bin/markdownlint-cli2
