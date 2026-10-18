@@ -13,5 +13,5 @@
     "MD048": { "style": "backtick" }
   },
   "globs": ["**/*.md"],
-  "ignores": ["node_modules/**", "LICENSE"]
+  "ignores": ["**/node_modules/**", "LICENSE"]
 }

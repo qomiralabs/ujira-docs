@@ -48,6 +48,12 @@ new_repo missing-anchor
 printf '[a](docs/target.md#not-a-heading)\n' >"$repo/README.md"
 expect "a link to a missing heading fails" 1 "$repo"
 
+# target.md has "Example" twice, so example and example-1 exist but not
+# example-2.
+new_repo duplicate-anchor
+printf '[a](docs/target.md#example-2)\n' >"$repo/README.md"
+expect "a link past the last duplicate heading fails" 1 "$repo"
+
 new_repo missing-local-anchor
 printf '# Page\n\n[a](#nowhere)\n' >"$repo/README.md"
 expect "a link to a missing heading on the same page fails" 1 "$repo"

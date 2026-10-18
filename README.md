@@ -31,11 +31,12 @@ These docs explain how UJIRA works, in plain English, for developers who are new
 
 ## Checking the docs locally
 
-You need Node.js 20 or later.
+You need Node.js 20 or later and Python 3.
 
 ```sh
-# Lint every Markdown file
-npx --yes markdownlint-cli2@0.23.3
+# Lint every Markdown file with the pinned markdownlint-cli2
+npm ci --prefix tools/markdownlint --ignore-scripts --no-audit --no-fund
+tools/markdownlint/node_modules/.bin/markdownlint-cli2
 
 # Fail if any file contains an em dash or an en dash
 ./scripts/check-dashes.sh
@@ -56,7 +57,7 @@ npx --yes markdownlint-cli2@0.23.3
 ./scripts/test-check-links.sh
 ```
 
-All seven commands exit with code 0 when the docs are clean. The invisible character check and the link check need Python 3 and use its standard library only.
+All of these exit with code 0 when the docs are clean, and CI runs each of them on every pull request in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old; bump the version there and in the workflow together. The invisible character check and the link check need Python 3 and use its standard library only.
 
 ## Invisible characters
 
@@ -70,7 +71,7 @@ It reads every tracked file as bytes. Only files whose extension is on the short
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs on every pull request and on pushes to `development`, `staging` and `main`, with read-only permissions. Its `secrets` job lints the workflows with actionlint and runs the secret scan below. Every action is pinned to a full commit SHA, and actionlint and gitleaks are release binaries checked against a SHA-256 in the workflow; bump a version and its hash together.
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `development`, `staging` and `main`, with read-only permissions. Its `secrets` job lints the workflows with actionlint and runs the secret scan below. The `markdownlint`, `dashes`, `invisible-characters` and `links` jobs run the checks described under Checking the docs locally, with their self tests. Every action is pinned to a full commit SHA, and actionlint and gitleaks are release binaries checked against a SHA-256 in the workflow; bump a version and its hash together.
 
 ## Secret scanning
 
