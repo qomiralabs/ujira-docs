@@ -38,7 +38,9 @@ You need Node.js 20 or later and Python 3.
 npm ci --prefix tools/markdownlint --ignore-scripts --no-audit --no-fund
 tools/markdownlint/node_modules/.bin/markdownlint-cli2
 
-# Fail if any file contains an em dash or an en dash
+# Fail if any tracked file contains an em dash or an en dash.
+# It reads the content git holds, so staged content counts and an unstaged edit does not.
+# Only a real image, font or wasm file (by extension and signature) is skipped.
 ./scripts/check-dashes.sh
 
 # Self test for the dash check
@@ -63,7 +65,7 @@ tools/markdownlint/node_modules/.bin/markdownlint-cli2
 ./scripts/test-check-glossary-order.sh
 ```
 
-All of these exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only. CI runs markdownlint, the dash check, the invisible character check and the link check, with their self tests, in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs; the glossary order check is not in CI yet. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The `markdownlint` job also runs `npm audit` on that tree, and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18).
+All of these exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only. CI runs markdownlint, the dash check, the invisible character check and the link check, with their self tests, in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs; the glossary order check is not in CI yet (#20). markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The `markdownlint` job also runs `npm audit` on that tree, and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18).
 
 ## Invisible characters
 
