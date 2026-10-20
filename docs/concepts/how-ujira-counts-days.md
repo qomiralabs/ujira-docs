@@ -15,7 +15,7 @@ UJIRA counts days in two ways, on purpose:
 
 Reports use your reporting time zone so that "yesterday" means your yesterday. The per-person daily cap cannot do that. It is enforced by the mandate contract on Stellar, and a contract has no time zone setting: it only knows UTC. See [Mandates](mandates.md).
 
-So the two counts agree for most of the day and disagree near your local midnight.
+So the two counts agree for most of the day, and disagree for a window as long as your zone's offset from UTC: at the **start** of your day if your zone is ahead of UTC, at the **end** of it if your zone is behind.
 
 ## Why it matters
 
@@ -29,6 +29,20 @@ If your reporting time zone is **behind UTC**, the mismatch falls in the evening
 The size of the gap is your zone's offset from UTC, so where summer time is observed the reset moves by an hour with it. Lagos does not observe summer time, so its reset stays at 01:00 all year.
 
 Both counts are correct. Neither is a bug, and neither can be changed to match the other.
+
+### Your zone's window
+
+Your offset from UTC is your own clock minus UTC at the same moment, and the window is that many hours long:
+
+| Reporting time zone | Offset from UTC | Hours that fall in a different UTC day |
+| --- | --- | --- |
+| Lagos | +1:00 | 00:00 to 00:59, in the previous UTC day |
+| Dubai | +4:00 | 00:00 to 03:59, in the previous UTC day |
+| Kolkata | +5:30 | 00:00 to 05:29, in the previous UTC day |
+| Kathmandu | +5:45 | 00:00 to 05:44, in the previous UTC day |
+| New York | -5:00, or -4:00 under summer time | 19:00 to 23:59, or 20:00 to 23:59 under summer time, in the next UTC day |
+
+Two things follow. A zone whose offset is not a whole number of hours has a window that ends at 29 or 44 minutes past, not on the hour. And where summer time is observed the window moves with it, so a New York principal's window starts at 19:00 in January and 20:00 in October. If your reporting time zone is UTC itself, the two counts never disagree.
 
 ## Worked example
 
@@ -53,7 +67,18 @@ Payout A is the quiet case: late in the Lagos evening, both counts say Monday. P
 - The mandate refuses the payout, because on the UTC day Monday 12 the recipient has already had $400.00.
 - The same $100.00 payout goes through from **01:00** Lagos time, when the UTC day turns over.
 
-If you read only one thing on this page: near your local midnight, check the recipient's cap against the UTC day, not against your own day.
+### The same thing in a zone behind UTC
+
+A principal in New York, in January, is five hours behind UTC, so its window is the last five hours of its day:
+
+| Payout | New York time | UTC time | Counts in reports as | Counts against the cap for |
+| --- | --- | --- | --- | --- |
+| D | 18:30 Monday 12 January | 23:30 Monday 12 January | Monday 12 | Monday 12 |
+| E | 19:30 Monday 12 January | 00:30 Tuesday 13 January | Monday 12 | Tuesday 13 |
+
+Payout E is the mirror image of payout B. It counts in **Monday's** total, because that is Monday in New York, but against **Tuesday's** cap, because the UTC day has already turned over. So here the surprise arrives in the evening, and a recipient's cap frees up at 19:00 local time rather than at midnight.
+
+If you read only one thing on this page: inside your zone's window, the first hours of your day if your zone is ahead of UTC or the last hours if it is behind, check the recipient's cap against the UTC day and not against your own day.
 
 ## What the reporting time zone does not change
 
@@ -68,10 +93,12 @@ It applies to past figures too, so a total you exported last week may be grouped
 
 ## Where each figure says which day it uses
 
-So you never have to guess:
+> **Planned.** These labels describe the intention for the dashboard and exports, which are not built yet.
 
-- Period totals, date filters and exports name the reporting time zone they used.
-- Figures about a recipient's daily cap are labelled as a UTC day.
+The plan is that you never have to guess:
+
+- Period totals, date filters and exports will name the reporting time zone they used.
+- Figures about a recipient's daily cap will be labelled as a UTC day.
 
 ## Changing the setting
 
@@ -83,7 +110,7 @@ Which roles may change it, and what each step is called, are decided by the dash
 
 ## Troubleshooting
 
-**A payout was refused, but the recipient's total for today looks well under their cap.** Check the payout's UTC time. If it was within an hour or so of your local midnight, it probably counted against the previous UTC day, which may have been full. See the worked example above.
+**A payout was refused, but the recipient's total for today looks well under their cap.** Check the payout's UTC time against your zone's window above. If it fell inside the window, it counted against a different UTC day, which may already have been full: the previous UTC day if your zone is ahead of UTC, the next one if your zone is behind.
 
 **A recipient's total for one day is above their daily cap.** The day in your report covers parts of two UTC days, and the cap applies to each UTC day separately. Nothing was overpaid.
 
