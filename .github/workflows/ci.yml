@@ -196,3 +196,24 @@ jobs:
 
       - name: Test the link check
         run: scripts/test-check-links.sh
+
+  # The glossary entries must stay in alphabetical order. Uses the runner's
+  # python3 and its standard library only.
+  glossary:
+    name: glossary
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash --noprofile --norc -euo pipefail {0}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check the glossary order
+        run: scripts/check-glossary-order.py
+
+      - name: Test the glossary order check
+        run: scripts/test-check-glossary-order.sh
