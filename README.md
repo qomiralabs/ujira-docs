@@ -38,7 +38,7 @@ You need Node.js 20 or later and Python 3.
 npm ci --prefix tools/markdownlint --ignore-scripts --no-audit --no-fund
 tools/markdownlint/node_modules/.bin/markdownlint-cli2
 
-# Fail if any tracked file contains an em dash or an en dash.
+# Fail if any tracked file contains an em dash or an en dash, or has one in its name.
 # It reads the content git holds, so staged content counts and an unstaged edit does not.
 # Only a real image, font or wasm file (by extension and signature) is skipped.
 ./scripts/check-dashes.sh

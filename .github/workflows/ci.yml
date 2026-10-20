@@ -156,7 +156,10 @@ jobs:
       - name: Test the audit check
         run: scripts/test-check-npm-audit.sh
 
-  # Fails on any em dash or en dash in the tree.
+  # Fails on any em dash or en dash in a tracked file's content or its path.
+  # The same scripts run in every UJIRA repository. The self test runs first,
+  # so the check's result is only trusted once the check is known to fail when
+  # it should, and the second step reports even when the first fails.
   dashes:
     name: dashes
     runs-on: ubuntu-24.04
@@ -170,14 +173,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Check for dashes
-        run: scripts/check-dashes.sh
-
       - name: Test the dash check
         run: scripts/test-check-dashes.sh
 
-  # Fails on literal invisible and bidirectional control characters. Uses the
-  # runner's python3 and its standard library only.
+      - name: Check for dashes
+        if: ${{ !cancelled() }}
+        run: scripts/check-dashes.sh
+
   invisible-characters:
     name: invisible-characters
     runs-on: ubuntu-24.04
