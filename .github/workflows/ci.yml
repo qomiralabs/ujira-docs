@@ -24,6 +24,11 @@ env:
   # only to a release at least 14 days old.
   GITLEAKS_VERSION: 8.30.1
   GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+  # markdownlint-cli2@0.23.3 (MIT), locked with its whole dependency tree in
+  # tools/markdownlint/package-lock.json, with katex and smol-toml raised by
+  # npm overrides past their advisories. Bump both together.
+  MARKDOWNLINT_CLI2_VERSION: 0.23.3
+  NODE_VERSION: 24.21.0
 
 jobs:
   # Scans the whole history, not only the change, so it checks out every
@@ -76,3 +81,118 @@ jobs:
       - name: Test the secret scan
         if: ${{ !cancelled() }}
         run: scripts/secret-scan.test.sh
+
+  # Lints every Markdown file with the repository config.
+  markdownlint:
+    name: markdownlint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash --noprofile --norc -euo pipefail {0}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: tools/markdownlint/package-lock.json
+
+      # Installs exactly the lockfile, and no package gets to run install
+      # scripts.
+      - name: Install markdownlint-cli2
+        working-directory: tools/markdownlint
+        run: |
+          node --version | grep -qx "v${NODE_VERSION}" || { echo "node is not ${NODE_VERSION}" >&2; exit 1; }
+          npm ci --ignore-scripts --no-audit --no-fund
+          # Read from the installed package, since the tool's --help exits
+          # non-zero.
+          version=$(node -p 'require("./node_modules/markdownlint-cli2/package.json").version')
+          echo "markdownlint-cli2 $version"
+          [ "$version" = "${MARKDOWNLINT_CLI2_VERSION}" ] || { echo "markdownlint-cli2 is not ${MARKDOWNLINT_CLI2_VERSION}" >&2; exit 1; }
+
+      - name: Lint Markdown
+        run: tools/markdownlint/node_modules/.bin/markdownlint-cli2
+
+      # Fails on any advisory in the locked tree that is not in the reviewed
+      # accepted list, and on an accepted one that is no longer reported.
+      - name: Audit the markdownlint dependencies
+        run: |
+          code=0
+          (cd tools/markdownlint && npm audit --json) >"${RUNNER_TEMP}/audit.json" || code=$?
+          # npm audit exits 1 when it reports any advisory; anything else is a failure to run.
+          if [ "$code" -gt 1 ]; then
+            cat "${RUNNER_TEMP}/audit.json"
+            exit "$code"
+          fi
+          scripts/check-npm-audit.py "${RUNNER_TEMP}/audit.json" tools/markdownlint/audit-accepted.json
+
+      - name: Test the audit check
+        run: scripts/test-check-npm-audit.sh
+
+  # Fails on any em dash or en dash in the tree.
+  dashes:
+    name: dashes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash --noprofile --norc -euo pipefail {0}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check for dashes
+        run: scripts/check-dashes.sh
+
+      - name: Test the dash check
+        run: scripts/test-check-dashes.sh
+
+  # Fails on literal invisible and bidirectional control characters. Uses the
+  # runner's python3 and its standard library only.
+  invisible-characters:
+    name: invisible-characters
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash --noprofile --norc -euo pipefail {0}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check invisible characters
+        run: scripts/check-invisible-characters.py
+
+      - name: Test the invisible character check
+        run: scripts/test-check-invisible-characters.sh
+
+  # Every relative link and heading anchor must resolve inside the repository.
+  # External URLs are never fetched.
+  links:
+    name: links
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        shell: bash --noprofile --norc -euo pipefail {0}
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check links
+        run: scripts/check-links.py
+
+      - name: Test the link check
+        run: scripts/test-check-links.sh
