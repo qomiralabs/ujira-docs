@@ -39,7 +39,9 @@ You need Node.js 20 or later and Python 3.
 npm ci --prefix tools/markdownlint --ignore-scripts --no-audit --no-fund
 tools/markdownlint/node_modules/.bin/markdownlint-cli2
 
-# Fail if any file contains an em dash or an en dash
+# Fail if any tracked file contains an em dash or an en dash.
+# It reads the content git holds, so staged content counts and an unstaged edit does not.
+# Only a real image, font or wasm file (by extension and signature) is skipped.
 ./scripts/check-dashes.sh
 
 # Self test for the dash check
@@ -64,7 +66,7 @@ tools/markdownlint/node_modules/.bin/markdownlint-cli2
 ./scripts/test-check-glossary-order.sh
 ```
 
-All of these exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only. CI runs markdownlint, the dash check, the invisible character check and the link check, with their self tests, in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs; the glossary order check is not in CI yet. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The `markdownlint` job also runs `npm audit` on that tree, and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18).
+All of these exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only. CI runs markdownlint, the dash check, the invisible character check and the link check, with their self tests, in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs; the glossary order check is not in CI yet (#20). markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The `markdownlint` job also runs `npm audit` on that tree, and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18).
 
 ## Invisible characters
 
@@ -76,9 +78,13 @@ scripts/check-invisible-characters.py
 
 It reads every tracked file as bytes. Only files whose extension is on the short binary list in the script (`png`, `jpg`, `jpeg`, `gif`, `webp`, `ico`, `woff`, `woff2`, `wasm`, `pdf`) are skipped, and only when their content starts with that format's signature; a listed name with other content fails. Every other file must be valid UTF-8 and is checked in full, and a NUL byte is reported as U+0000, so a NUL cannot make a source file skip the check. It fails on every character in the Unicode categories Cf, Zl and Zp, such as the byte order mark, zero width characters, the bidirectional controls U+202A to U+202E and U+2066 to U+2069, and U+2028 and U+2029, naming the file, line, column and code point. Categories come from Python's `unicodedata` tables, and the script uses the standard library only. It also fails on the no break space (U+00A0), narrow no break space (U+202F) and minus sign (U+2212), except in files listed in `scripts/invisible-characters-allowlist.txt`. Write any of these as an HTML entity such as `&nbsp;` or `&#x2212;`, or as an escape inside code. `scripts/test-check-invisible-characters.sh` tests the check itself.
 
+## Pull requests
+
+Every pull request starts from `.github/pull_request_template.md`: the linked issue, what and why, the tests run with their output, docs, a checklist, the reviews the change type needs, and the merge rules (squash only, and any commit after an approval needs review again). `scripts/check-pr-template.sh` fails if the template loses any of these or stops being plain ASCII, and `scripts/check-pr-template.test.sh` proves it; CI runs both. `.github/CODEOWNERS` names the owner of each top level path. It is advisory: on the current GitHub plan branch protection cannot require code owner review (qomiralabs/ujira#229).
+
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs on every pull request and on pushes to `development`, `staging` and `main`, with read-only permissions. Its `secrets` job lints the workflows with actionlint and runs the secret scan below. The `markdownlint`, `dashes`, `invisible-characters` and `links` jobs run the checks described under Checking the docs locally, with their self tests. Every action is pinned to a full commit SHA, and actionlint and gitleaks are release binaries checked against a SHA-256 in the workflow; bump a version and its hash together.
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `development`, `staging` and `main`, with read-only permissions. Its `checks` job runs the pull request template check and its self test. Its `secrets` job lints the workflows with actionlint and runs the secret scan below. The `markdownlint`, `dashes`, `invisible-characters` and `links` jobs run the checks described under Checking the docs locally, with their self tests. Every action is pinned to a full commit SHA, and actionlint and gitleaks are release binaries checked against a SHA-256 in the workflow; bump a version and its hash together.
 
 ## Secret scanning
 
