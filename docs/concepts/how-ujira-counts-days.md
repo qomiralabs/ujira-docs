@@ -73,11 +73,13 @@ So you never have to guess:
 - Period totals, date filters and exports name the reporting time zone they used.
 - Figures about a recipient's daily cap are labelled as a UTC day.
 
-## Who can change it
+## Changing the setting
 
-An owner or an admin on the principal's account changes the reporting time zone in the dashboard, under General settings. Nobody else can.
+> **Planned.** The dashboard setting is not built yet, so this section describes the intention and not current behaviour. How days are counted, above, is settled and does not depend on it.
 
-The change needs a **step-up check**, which means confirming your identity again at the moment you make it, even though you are already signed in. Each change is then written to the [audit log](mandates.md#approvals), with who made it and when, so a total that looks different from last month's can be traced to the change.
+The plan is that the principal changes its reporting time zone in the dashboard, that only people the principal authorises can change it, that changing it needs a second identity confirmation at that moment, and that each change is recorded with who made it and when, so a total that looks different from last month's can be traced to the change.
+
+Which roles may change it, and what each step is called, are decided by the dashboard work rather than here. They will be documented when that ships.
 
 ## Troubleshooting
 
@@ -85,6 +87,6 @@ The change needs a **step-up check**, which means confirming your identity again
 
 **A recipient's total for one day is above their daily cap.** The day in your report covers parts of two UTC days, and the cap applies to each UTC day separately. Nothing was overpaid.
 
-**Two reports of the same period do not match.** Check whether the reporting time zone changed between them, in the audit log, and whether one report came from a system using UTC.
+**Two reports of the same period do not match.** Check whether the reporting time zone changed between them, and whether one report came from a system using UTC.
 
 **Can the cap follow my reporting time zone instead?** No. The cap is enforced on Stellar by the mandate contract, which has no time zone.
