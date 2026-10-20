@@ -16,11 +16,11 @@ These docs explain how UJIRA works, in plain English, for developers who are new
 ### Concepts
 
 - [Mandates](docs/concepts/mandates.md): the spending rules that limit what an agent can pay, and the approvals above a threshold
-- [Funding](docs/concepts/funding.md): how you put money into a mandate with a stablecoin deposit, and why you never need to hold network tokens for fees
+- [Funding](docs/concepts/funding.md): how you put money into a mandate with a stablecoin deposit, and why you never need XLM
 - [Payouts and split payouts](docs/concepts/payouts.md): how a payout becomes money in a person's account, and how a recipient can take one payout two ways
 - [Receipts](docs/concepts/receipts.md): the permanent, verifiable proof of every payout
 - [Recipient onboarding and the embed widget](docs/concepts/recipient-onboarding.md): how a person becomes payable, inside your own product
-- [Chains and routing](docs/concepts/chains-and-routing.md): why UJIRA runs on Stellar and Celo, and how it picks one for each payout
+- [Stellar and payout methods](docs/concepts/chains-and-routing.md): how UJIRA settles on Stellar and reaches people in their own Stellar wallet, or in local currency through licensed anchors
 - [Security and the non-custodial model](docs/concepts/security.md): who holds the money at each step, and what protects it
 
 ### Reference
@@ -31,11 +31,12 @@ These docs explain how UJIRA works, in plain English, for developers who are new
 
 ## Checking the docs locally
 
-You need Node.js 20 or later.
+You need Node.js 20 or later and Python 3.
 
 ```sh
-# Lint every Markdown file
-npx --yes markdownlint-cli2@0.23.3
+# Lint every Markdown file with the pinned markdownlint-cli2
+npm ci --prefix tools/markdownlint --ignore-scripts --no-audit --no-fund
+tools/markdownlint/node_modules/.bin/markdownlint-cli2
 
 # Fail if any file contains an em dash or an en dash
 ./scripts/check-dashes.sh
@@ -48,9 +49,21 @@ npx --yes markdownlint-cli2@0.23.3
 
 # Self test for the invisible character check
 ./scripts/test-check-invisible-characters.sh
+
+# Fail if any relative link or heading link does not resolve
+./scripts/check-links.py
+
+# Self test for the link check
+./scripts/test-check-links.sh
+
+# Fail if the glossary is not in alphabetical order
+./scripts/check-glossary-order.py
+
+# Self test for the glossary order check
+./scripts/test-check-glossary-order.sh
 ```
 
-All five commands exit with code 0 when the docs are clean. The invisible character check needs Python 3 and uses its standard library only.
+All of these exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only. CI runs markdownlint, the dash check, the invisible character check and the link check, with their self tests, in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs; the glossary order check is not in CI yet. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The `markdownlint` job also runs `npm audit` on that tree, and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18).
 
 ## Invisible characters
 
@@ -68,7 +81,7 @@ Every pull request starts from `.github/pull_request_template.md`: the linked is
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs on every pull request and on pushes to `development`, `staging` and `main`, with read-only permissions. Its `checks` job runs the pull request template check and its self test. Its `secrets` job lints the workflows with actionlint and runs the secret scan below. Every action is pinned to a full commit SHA, and actionlint and gitleaks are release binaries checked against a SHA-256 in the workflow; bump a version and its hash together.
+`.github/workflows/ci.yml` runs on every pull request and on pushes to `development`, `staging` and `main`, with read-only permissions. Its `checks` job runs the pull request template check and its self test. Its `secrets` job lints the workflows with actionlint and runs the secret scan below. The `markdownlint`, `dashes`, `invisible-characters` and `links` jobs run the checks described under Checking the docs locally, with their self tests. Every action is pinned to a full commit SHA, and actionlint and gitleaks are release binaries checked against a SHA-256 in the workflow; bump a version and its hash together.
 
 ## Secret scanning
 
@@ -86,6 +99,10 @@ On pull requests the scan reads `.gitleaks.toml` from the base branch rather tha
 scripts/secret-scan.sh
 scripts/secret-scan.test.sh
 ```
+
+A manual run of gitleaks must pass the config as an absolute path, as `scripts/secret-scan.sh` does (`--config "$PWD/.gitleaks.toml"`, not `--config .gitleaks.toml`). When a relative config path matches the path of the file inside the repository, gitleaks silently skips findings in the config file itself.
+
+Merging: this repository must stay squash-only. A pull request branch may hold commits, such as test probes or fixups, that never reach `development` only because every merge is a squash merge, and the scan on `development` relies on that. Enabling merge commits or rebase merging requires revisiting the secret scan first.
 
 Keep `.env` files untracked; only `.env.example` belongs in git.
 

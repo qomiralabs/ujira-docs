@@ -4,7 +4,7 @@
 
 ## What it is
 
-The **API** (application programming interface) is how your own code talks to UJIRA. It is a **REST** API: your code sends HTTPS requests to UJIRA and gets structured answers back. With it you will be able to request payouts, check their status and read receipts. The chain is chosen for you by the router, so the API never asks you to pick one. See [Chains and routing](concepts/chains-and-routing.md).
+The **API** (application programming interface) is how your own code talks to UJIRA. It is a **REST** API: your code sends HTTPS requests to UJIRA and gets structured answers back. With it you will be able to request payouts, check their status and read receipts. UJIRA picks the payout path for the method each recipient chose, so you do not choose one. See [Stellar and payout methods](concepts/chains-and-routing.md).
 
 The dashboard, the API and the [MCP server](mcp-guide.md) all use the same payout system, so the same mandate rules and approvals apply whichever one you use.
 
