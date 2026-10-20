@@ -79,6 +79,22 @@ printf 'notes.md\n' >"$repo/.gitignore"
 printf '[a](docs/nope.md)\n' >"$repo/notes.md"
 expect "ignored files are not checked" 0 "$repo"
 
+new_repo inline-code-heading
+# The backticks are Markdown code spans, not shell expansions.
+# shellcheck disable=SC2016
+printf '# Page\n\n## The `check-links` command\n' >"$repo/docs/code.md"
+printf '[a](docs/code.md#the-check-links-command)\n' >"$repo/README.md"
+expect "heading with inline code" 0 "$repo"
+
+new_repo percent-encoded
+printf '# Spaced\n\n## Part two\n' >"$repo/docs/my page.md"
+printf '[a](docs/my%%20page.md) [b](docs/my%%20page.md#part-two)\n' >"$repo/README.md"
+expect "percent-encoded path" 0 "$repo"
+
+new_repo percent-encoded-missing
+printf '[a](docs/no%%20such%%20page.md)\n' >"$repo/README.md"
+expect "a percent-encoded link to a missing file fails" 1 "$repo"
+
 # A fake git that fails every command, so the file list cannot be read.
 mkdir -p "$work/fake-git"
 printf '#!/usr/bin/env bash\nexit 128\n' >"$work/fake-git/git"

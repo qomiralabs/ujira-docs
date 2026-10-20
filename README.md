@@ -55,9 +55,15 @@ tools/markdownlint/node_modules/.bin/markdownlint-cli2
 
 # Self test for the link check
 ./scripts/test-check-links.sh
+
+# Fail if the glossary is not in alphabetical order
+./scripts/check-glossary-order.py
+
+# Self test for the glossary order check
+./scripts/test-check-glossary-order.sh
 ```
 
-All of these exit with code 0 when the docs are clean, and CI runs each of them on every pull request in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The job also runs `npm audit` on that tree and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18). The invisible character check and the link check need Python 3 and use its standard library only.
+All of these exit with code 0 when the docs are clean. The invisible character, link and glossary order checks need Python 3 and use its standard library only. CI runs markdownlint, the dash check, the invisible character check and the link check, with their self tests, in the `markdownlint`, `dashes`, `invisible-characters` and `links` jobs; the glossary order check is not in CI yet. markdownlint-cli2 0.23.3 (MIT) is locked with its whole dependency tree in `tools/markdownlint/package-lock.json`, resolved from releases at least 14 days old, with npm `overrides` raising katex to 0.18.2 and smol-toml to 1.9.0 past their advisories; bump the version there and in the workflow together. The `markdownlint` job also runs `npm audit` on that tree, and `scripts/check-npm-audit.py` fails on any advisory not listed, with its reason, in `tools/markdownlint/audit-accepted.json`, or on a listed one that is no longer reported. The only entry today is braces GHSA-vfj7-8cjw-p6xm, which has no patch yet (#18).
 
 ## Invisible characters
 
@@ -89,6 +95,10 @@ On pull requests the scan reads `.gitleaks.toml` from the base branch rather tha
 scripts/secret-scan.sh
 scripts/secret-scan.test.sh
 ```
+
+A manual run of gitleaks must pass the config as an absolute path, as `scripts/secret-scan.sh` does (`--config "$PWD/.gitleaks.toml"`, not `--config .gitleaks.toml`). When a relative config path matches the path of the file inside the repository, gitleaks silently skips findings in the config file itself.
+
+Merging: this repository must stay squash-only. A pull request branch may hold commits, such as test probes or fixups, that never reach `development` only because every merge is a squash merge, and the scan on `development` relies on that. Enabling merge commits or rebase merging requires revisiting the secret scan first.
 
 Keep `.env` files untracked; only `.env.example` belongs in git.
 

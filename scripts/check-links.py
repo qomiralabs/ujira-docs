@@ -8,8 +8,10 @@
 # skipped. Links inside fenced code blocks and inline code are ignored.
 #
 # Heading anchors follow GitHub's rules: lowercase, punctuation removed except
-# hyphens and underscores, spaces turned into hyphens, and a repeated heading
-# gets -1, -2 and so on.
+# hyphens and underscores (so inline code keeps its text and loses only its
+# backticks), spaces turned into hyphens, and a repeated heading gets -1, -2
+# and so on. Percent-encoded paths and fragments, such as %20 for a space, are
+# decoded before they are resolved.
 #
 # Files come from `git ls-files` (tracked plus new files that are not
 # ignored). If git cannot list them, the check fails rather than passing.
@@ -24,6 +26,7 @@ import os
 import re
 import subprocess
 import sys
+from urllib.parse import unquote
 
 INLINE_LINK = re.compile(r"!?\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 REFERENCE_DEF = re.compile(r"^\s{0,3}\[[^\]]+\]:\s*<?(\S+?)>?(?:\s+.*)?$")
@@ -43,8 +46,11 @@ def run_git(args):
     return result.stdout, ""
 
 
-def prose_lines(text):
-    """Yields (line number, line) outside fenced code, with inline code removed."""
+def prose_lines(text, keep_inline_code=False):
+    """Yields (line number, line) outside fenced code.
+
+    Inline code is removed unless keep_inline_code is set, so a link written
+    inside a code span is not checked."""
     fence = None
     for number, line in enumerate(text.splitlines(), start=1):
         match = FENCE.match(line)
@@ -55,7 +61,7 @@ def prose_lines(text):
         if match:
             fence = match.group(1)
             continue
-        yield number, INLINE_CODE.sub("", line)
+        yield number, line if keep_inline_code else INLINE_CODE.sub("", line)
 
 
 def slug(heading):
@@ -68,7 +74,8 @@ def slug(heading):
 def anchors(text):
     seen = {}
     found = set()
-    for _, line in prose_lines(text):
+    # Headings keep their inline code: GitHub drops only the backticks.
+    for _, line in prose_lines(text, keep_inline_code=True):
         match = HEADING.match(line)
         if not match:
             continue
@@ -117,6 +124,8 @@ def main():
                 checked += 1
                 where = f"{name}:{number}: {target}"
                 file_part, _, fragment = target.partition("#")
+                # Links may percent-encode characters, such as a space as %20.
+                file_part, fragment = unquote(file_part), unquote(fragment)
                 if file_part:
                     resolved = os.path.realpath(os.path.join(os.path.dirname(path), file_part))
                     if os.path.commonpath([root, resolved]) != root:
