@@ -37,7 +37,9 @@ You need Node.js 20 or later.
 # Lint every Markdown file
 npx --yes markdownlint-cli2@0.23.3
 
-# Fail if any tracked file contains an em dash or an en dash (binary files are skipped)
+# Fail if any tracked file contains an em dash or an en dash.
+# It reads the content git holds, so staged content counts and an unstaged edit does not.
+# Binary files are skipped.
 ./scripts/check-dashes.sh
 
 # Self test for the dash check
