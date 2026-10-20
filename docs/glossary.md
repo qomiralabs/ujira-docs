@@ -62,9 +62,9 @@ Payments and blockchains come with a lot of jargon. If a word on any page is unc
 
 **Recipient.** The person who gets paid.
 
-**Reporting time zone.** The time zone, set on the principal's account, that reports group figures into. It never changes a cap: caps count the UTC day. See [How UJIRA counts days](concepts/how-ujira-counts-days.md).
-
 **Routing configuration.** The list, kept by UJIRA, of which anchors serve which countries and payout methods. See [Stellar and payout methods](concepts/chains-and-routing.md).
+
+**Reporting time zone.** The time zone, set on the principal's account, that reports group figures into. It never changes a cap: caps count the UTC day. See [How UJIRA counts days](concepts/how-ujira-counts-days.md).
 
 **Smart contract.** A small program that runs on a blockchain and enforces its rules for everyone.
 
