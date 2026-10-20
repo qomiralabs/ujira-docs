@@ -199,8 +199,8 @@ jobs:
 
   # The glossary entries must stay in alphabetical order. Uses the runner's
   # python3 and its standard library only.
-  glossary:
-    name: glossary
+  glossary-order:
+    name: glossary-order
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     defaults:

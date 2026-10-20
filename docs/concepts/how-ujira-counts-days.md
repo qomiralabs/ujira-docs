@@ -75,7 +75,9 @@ So you never have to guess:
 
 ## Who can change it
 
-The principal sets the reporting time zone in the dashboard, under General settings. Each change is written to the [audit log](mandates.md#approvals), with who made it and when, so a total that looks different from last month's can be traced to the change.
+An owner or an admin on the principal's account changes the reporting time zone in the dashboard, under General settings. Nobody else can.
+
+The change needs a **step-up check**, which means confirming your identity again at the moment you make it, even though you are already signed in. Each change is then written to the [audit log](mandates.md#approvals), with who made it and when, so a total that looks different from last month's can be traced to the change.
 
 ## Troubleshooting
 
