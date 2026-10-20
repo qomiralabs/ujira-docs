@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Markdown lint configuration and a script that fails on em and en dashes.
 - A link check script, with a self test, that fails when a relative link or heading link does not resolve.
 - A check, with a self test, that the glossary is in alphabetical order.
+- A pull request template, with a check and a self test that keep it asking for the linked issue, the tests, docs, the checklist and the reviews each change type needs.
+- Code owners for every top level path, advisory until branch protection can require code owner review.
+- A check, with a self test, that fails on any npm advisory in the locked markdownlint tree that is not in a reviewed accepted list, and on an accepted one that is no longer reported.
 
 ### Changed
 
