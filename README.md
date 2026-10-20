@@ -39,7 +39,7 @@ npx --yes markdownlint-cli2@0.23.3
 
 # Fail if any tracked file contains an em dash or an en dash.
 # It reads the content git holds, so staged content counts and an unstaged edit does not.
-# Binary files are skipped.
+# Only a real image, font or wasm file (by extension and signature) is skipped.
 ./scripts/check-dashes.sh
 
 # Self test for the dash check
