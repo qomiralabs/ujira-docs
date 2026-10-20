@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Markdown lint configuration and a script that fails on em and en dashes.
 - A link check script, with a self test, that fails when a relative link or heading link does not resolve.
 - A check, with a self test, that the glossary is in alphabetical order.
+- A page on how UJIRA counts days, explaining the reporting time zone used by reports against the UTC day used by a recipient's daily cap, with a worked example. The glossary gains "Reporting time zone" and "UTC day".
 
 ### Changed
 

@@ -19,6 +19,7 @@ These docs explain how UJIRA works, in plain English, for developers who are new
 - [Funding](docs/concepts/funding.md): how you put money into a mandate with a stablecoin deposit, and why you never need XLM
 - [Payouts and split payouts](docs/concepts/payouts.md): how a payout becomes money in a person's account, and how a recipient can take one payout two ways
 - [Receipts](docs/concepts/receipts.md): the permanent, verifiable proof of every payout
+- [How UJIRA counts days](docs/concepts/how-ujira-counts-days.md): why your reports and a recipient's daily cap can put the same payout in different days
 - [Recipient onboarding and the embed widget](docs/concepts/recipient-onboarding.md): how a person becomes payable, inside your own product
 - [Stellar and payout methods](docs/concepts/chains-and-routing.md): how UJIRA settles on Stellar and reaches people in their own Stellar wallet, or in local currency through licensed anchors
 - [Security and the non-custodial model](docs/concepts/security.md): who holds the money at each step, and what protects it

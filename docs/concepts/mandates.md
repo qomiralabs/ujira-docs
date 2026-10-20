@@ -14,7 +14,7 @@ A mandate has these rules:
 | --- | --- |
 | Total budget | The most the mandate can ever pay out |
 | Per-payment cap | The most any single payout can be |
-| Per-person daily cap | The most one recipient can be paid in one day |
+| Per-person daily cap | The most one recipient can be paid in one UTC day. See [How UJIRA counts days](how-ujira-counts-days.md) |
 | Allowed recipients or countries | Who can be paid, by name or by country |
 | Approval threshold | The amount above which a named person must approve a payout before it runs |
 | Expiry | The date after which the mandate stops paying |
@@ -58,7 +58,7 @@ What happens next:
 
 ## Troubleshooting
 
-**A payout was refused.** Check it against each rule in the table above: the amount against the per-payment cap, the recipient's total for the day against the per-person daily cap, the recipient against the allowed list, the mandate's remaining budget, and the expiry date. Also check that the mandate is not paused or revoked.
+**A payout was refused.** Check it against each rule in the table above: the amount against the per-payment cap, the recipient's total for the day against the per-person daily cap, the recipient against the allowed list, the mandate's remaining budget, and the expiry date. Also check that the mandate is not paused or revoked. The daily cap counts the UTC day, which may not match the day in your reports: see [How UJIRA counts days](how-ujira-counts-days.md).
 
 **A payout is waiting.** It is probably above the approval threshold. A named approver needs to approve it.
 
