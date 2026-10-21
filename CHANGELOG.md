@@ -29,4 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - The link check accepts headings that contain inline code and percent-encoded paths.
 
+### Security
+
+- The locked markdownlint tool tree resolves markdown-it to 15.0.3, past three advisories that were published against 15.0.1.
+
 [Unreleased]: https://github.com/qomiralabs/ujira-docs/commits/development

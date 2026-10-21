@@ -25,8 +25,9 @@ env:
   GITLEAKS_VERSION: 8.30.1
   GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
   # markdownlint-cli2@0.23.3 (MIT), locked with its whole dependency tree in
-  # tools/markdownlint/package-lock.json, with katex and smol-toml raised by
-  # npm overrides past their advisories. Bump both together.
+  # tools/markdownlint/package-lock.json, with katex, markdown-it and
+  # smol-toml raised by npm overrides past their advisories. Bump the version
+  # and the overrides together.
   MARKDOWNLINT_CLI2_VERSION: 0.23.3
   NODE_VERSION: 24.21.0
 
