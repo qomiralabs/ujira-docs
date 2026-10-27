@@ -29,4 +29,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - The link check accepts headings that contain inline code and percent-encoded paths.
 
+### Security
+
+- The locked markdownlint tool tree resolves markdown-it to 15.0.3, past three advisories that were published against 15.0.1.
+- The braces advisory GHSA-vfj7-8cjw-p6xm is no longer reported against the locked markdownlint tool tree, because its publisher withdrew it on 2026-10-23 and not because anything was patched, so the accepted list that held it is now empty while braces stays at 3.0.3.
+
 [Unreleased]: https://github.com/qomiralabs/ujira-docs/commits/development
