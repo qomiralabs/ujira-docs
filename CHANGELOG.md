@@ -32,5 +32,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Security
 
 - The locked markdownlint tool tree resolves markdown-it to 15.0.3, past three advisories that were published against 15.0.1.
+- The braces advisory GHSA-vfj7-8cjw-p6xm is no longer reported against the locked markdownlint tool tree, so the accepted list that held it is now empty.
 
 [Unreleased]: https://github.com/qomiralabs/ujira-docs/commits/development
