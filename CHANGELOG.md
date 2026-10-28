@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - A pull request template, with a check and a self test that keep it asking for the linked issue, the tests, docs, the checklist and the reviews each change type needs.
 - Code owners for every top level path, advisory until branch protection can require code owner review.
 - A check, with a self test, that fails on any npm advisory in the locked markdownlint tree that is not in a reviewed accepted list, and on an accepted one that is no longer reported.
+- The glossary order check runs in CI, in a `glossary-order` job.
+- A page on how UJIRA counts days, explaining the reporting time zone used by reports against the UTC day used by a recipient's daily cap, with a worked example. The glossary gains "Reporting time zone" and "UTC day".
 
 ### Changed
 

@@ -10,7 +10,7 @@ You can ask for payouts one at a time, or many at once in a **batch** (for examp
 
 For each payout, UJIRA:
 
-1. Checks the request against the mandate's rules, and waits for approval if the amount is above the approval threshold. See [Mandates](mandates.md).
+1. Checks the request against the mandate's rules, and waits for approval if the amount is above the approval threshold. See [Mandates](mandates.md). The per-person daily cap counts the UTC day, which may differ from the day your reports show: see [How UJIRA counts days](how-ujira-counts-days.md).
 2. Pays out on Stellar by the method the recipient chose: USDC straight to their own Stellar wallet, or through a licensed **anchor** that converts to local currency and pays into a bank account, to mobile money or as cash. See [Stellar and payout methods](chains-and-routing.md).
 3. Tracks the status until the money arrives, and writes a receipt. See [Receipts](receipts.md).
 
